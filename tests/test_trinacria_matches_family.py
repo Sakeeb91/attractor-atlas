@@ -117,6 +117,27 @@ def test_canonical_flow_breaks_larger_groups(name, m):
     assert all(viol), name
 
 
+
+def test_canonical_flow_breaks_every_polyhedral_overgroup():
+    """D3 sits inside two copies of O and two of I (off-z rotation axes).
+    Every element of those groups outside D3 must be broken by the specimen."""
+    from atlas.family_d import polyhedral_overgroups
+
+    D3 = group_matrices()
+    rng = np.random.default_rng(19)
+    states = rng.uniform(-1.5, 1.5, (40, 3))
+    groups = polyhedral_overgroups(3)
+    assert sorted(nm for nm, _ in groups) == ["I", "I", "O", "O"]
+    n_extra = 0
+    for name, G in groups:
+        for g in G:
+            if any(np.allclose(g, d, atol=1e-9) for d in D3):
+                continue
+            n_extra += 1
+            viol = [np.max(np.abs(velocity(g @ s) - g @ velocity(s))) > 1e-6 for s in states]
+            assert all(viol), name
+    assert n_extra == 2 * 18 + 2 * 54
+
 def test_on_axis_equilibria_are_exact_roots():
     r = np.sqrt(NU)
     for eq in ([0.0, 0.0, 0.0], [0.0, 0.0, r], [0.0, 0.0, -r]):

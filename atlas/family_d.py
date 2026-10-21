@@ -50,9 +50,10 @@ where sigma_h is the z-flip (w, z) -> (w, -z), sigma_v the vertical mirror
   * gamma = delta = eps = 0 restores rotation by every angle.
   Generic parameters therefore carry exactly D_n among the axial point groups
   that contain it (D_nh, D_nd, D_2n and their supergroups). The polyhedral
-  groups that contain D_n (T and O for n = 2, O and I for n = 3, O for n = 4,
-  I for n = 5) add rotation axes off z; the test checks the n = 2 case, where
-  the 3-cycle of the coordinate axes that turns D_2 into T is broken.
+  rotation groups that contain D_n (T, O and I for n = 2; O and I for n = 3;
+  O for n = 4; I for n = 5) add rotation axes off z. polyhedral_overgroups(n)
+  builds every embedding of them that contains this D_n, and the tests check
+  that every one of their extra elements is broken.
 
 Real form for n = 3 (c = alpha*z^2 - beta):
 
@@ -137,6 +138,77 @@ def group_matrices(n):
                     nxt.append(m)
         frontier = nxt
     return elems
+
+
+def _closure(gens):
+    elems = [np.eye(3)]
+    frontier = [np.eye(3)]
+    while frontier:
+        nxt = []
+        for a in frontier:
+            for g in gens:
+                m = g @ a
+                if not any(np.allclose(m, e, atol=1e-9) for e in elems):
+                    elems.append(m)
+                    nxt.append(m)
+        frontier = nxt
+    return elems
+
+
+def _axis_rotation(axis, angle):
+    a = np.asarray(axis, dtype=float)
+    a = a / np.linalg.norm(a)
+    K = np.array([[0.0, -a[2], a[1]], [a[2], 0.0, -a[0]], [-a[1], a[0], 0.0]])
+    return np.eye(3) + np.sin(angle) * K + (1 - np.cos(angle)) * (K @ K)
+
+
+def _axis_and_angle(m):
+    ang = float(np.arccos(np.clip((np.trace(m) - 1.0) / 2.0, -1.0, 1.0)))
+    vals, vecs = np.linalg.eig(m)
+    ax = np.real(vecs[:, np.argmin(np.abs(vals - 1.0))])
+    return ax / np.linalg.norm(ax), ang
+
+
+def _polyhedral_standard():
+    """T, O and I as rotation-matrix lists in a standard orientation."""
+    phi = (1 + 5 ** 0.5) / 2
+    T = _closure([_axis_rotation((1, 1, 1), 2 * np.pi / 3), _axis_rotation((0, 0, 1), np.pi)])
+    O = _closure([_axis_rotation((1, 1, 1), 2 * np.pi / 3), _axis_rotation((0, 0, 1), np.pi / 2)])
+    I = _closure([_axis_rotation((1, 1, 1), 2 * np.pi / 3), _axis_rotation((0, 1, phi), 2 * np.pi / 5)])
+    assert (len(T), len(O), len(I)) == (12, 24, 60)
+    return {"T": T, "O": O, "I": I}
+
+
+def polyhedral_overgroups(n):
+    """Every polyhedral rotation group (T, O, I) that contains this D_n.
+
+    D_n here has its n-fold axis along z and a half-turn about x. A polyhedral
+    group P contains a conjugate of D_n when it has an n-fold axis a (for
+    n = 2, a 2-fold axis) and a 2-fold axis b perpendicular to it; rotating a
+    onto z and b onto x gives a copy of P that contains exactly this D_n.
+    All such copies are returned, deduplicated, as a list of
+    (name, matrices) pairs. Only n in {2, 3, 4, 5} have any.
+    """
+    Dn = group_matrices(n)
+    out, seen = [], []
+    for name, P in _polyhedral_standard().items():
+        axes = [_axis_and_angle(m) for m in P[1:]]
+        n_axes = [a for a, t in axes if abs(t - 2 * np.pi / n) < 1e-9]
+        two = [a for a, t in axes if abs(t - np.pi) < 1e-9]
+        for a in n_axes:
+            for b in two:
+                if abs(a @ b) > 1e-9:
+                    continue
+                R = np.array([b, np.cross(a, b), a])  # rows: new x, y, z
+                G = [R @ m @ R.T for m in P]
+                if not all(any(np.allclose(d, g, atol=1e-9) for g in G) for d in Dn):
+                    continue
+                key = sorted(tuple(np.round(g, 6).ravel()) for g in G)
+                if key in seen:
+                    continue
+                seen.append(key)
+                out.append((name, G))
+    return out
 
 
 def velocity(w, z, p, n):

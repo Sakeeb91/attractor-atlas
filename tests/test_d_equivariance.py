@@ -379,3 +379,30 @@ def test_D2_is_not_promoted_to_tetrahedral():
         if np.max(np.abs(_F_xyz(P3 @ X, p, 2) - P3 @ _F_xyz(X, p, 2))) > 1e-6:
             violations += 1
     assert violations == len(states)
+
+
+@pytest.mark.parametrize("n", [2, 3, 4, 5])
+def test_Dn_is_not_promoted_to_any_polyhedral_group(n):
+    """Every copy of T, O or I that contains this D_n (n-fold axis along z,
+    half-turn about x) adds rotations about axes off z. Each extra element
+    must be broken at every random state, so no polyhedral group is a
+    symmetry of the family."""
+    from atlas.family_d import polyhedral_overgroups
+
+    groups = polyhedral_overgroups(n)
+    expected = {2: ["T", "O", "I"], 3: ["O", "I"], 4: ["O"], 5: ["I"]}[n]
+    assert sorted({nm for nm, _ in groups}) == sorted(expected)
+    Dn = group_matrices(n)
+    rng = np.random.default_rng(707 + n)
+    states, params = _states_and_params(rng, 40)
+    for name, G in groups:
+        extra = [g for g in G if not any(np.allclose(g, d, atol=1e-9) for d in Dn)]
+        assert len(extra) == len(G) - 2 * n
+        for g in extra:
+            assert abs(np.linalg.det(g) - 1.0) < 1e-12
+            violations = 0
+            for (w, z), p in zip(states, params):
+                X = _to_xyz(w, z)
+                if np.max(np.abs(_F_xyz(g @ X, p, n) - g @ _F_xyz(X, p, n))) > 1e-6:
+                    violations += 1
+            assert violations == len(states), (name, n)
