@@ -11,6 +11,8 @@ repository and were reconciled at the `main` → `symmetry-program` merge:
   symmetry program's Phase-0 "literature verification strike": targeted checks of
   the three novelty claims that underpin the polyhedral (T/O/I) specimens, the S₄
   rotoreflection specimen, and the chaos-vs-symmetry-group law.
+  Claim 4 (added 2026-10-21) checks dihedral D_n flows before any wording about the
+  D3 specimen Trinacria.
 
 The two parts overlap deliberately (both cite Field–Golubitsky, Letellier–Gilmore,
 GSS, Ashwin–Melbourne) but from different angles: Part A positions the *method*
@@ -518,3 +520,102 @@ chaos" (×2); multi-scroll polyhedral; "number of scrolls"/symmetry-order vs lar
 exponent; Cn-equivariant λ₁ comparisons. Primary sources read in full or in relevant part:
 Reiter dodecahedron preprint (PDF), Letellier–Gilmore PRE 63 016206 (PDF, pp. 1–3),
 Guckenheimer–Worfolk survey (arXiv chao-dyn/9304010, §6 text extraction).
+
+---
+
+## Claim 4: Dihedral (chiral D_n) chaotic flows (Trinacria check, 2026-10-21)
+
+**Question.** Has anyone exhibited a chaotic autonomous 3-D flow whose attractor carries the
+chiral dihedral point group D3 (rotation by 120 degrees about z plus half-turns about three
+horizontal axes, all det +1, no mirror and no inversion)? More broadly, is D_n occupied for
+flows?
+
+**VERDICT: no explicit D3 exhibit found, but the general construction is not ours to
+claim.** We found no 3-D flow with a certified chaotic attractor carrying exactly chiral D3.
+Dihedral chaos is classical for maps, cover constructions make D_n-equivariant flows
+available in principle, and D2 is plausibly occupied by cross-product quadratic systems. The
+claim is therefore about one constructed and certified specimen, not about the group.
+
+### (a) Dihedral symmetry in maps (classical)
+
+- P. Chossat, M. Golubitsky, "Symmetry-increasing bifurcation of chaotic attractors",
+  *Physica D* **32**, 423-436 (1988). Planar maps with D_m symmetry; the Chossat-Golubitsky
+  map is the standard example.
+- M. Field, M. Golubitsky, *Symmetry in Chaos*, OUP 1992 / SIAM 2009. Symmetric icons:
+  planar iterated maps with dihedral and cyclic symmetry.
+- I. Melbourne, M. Dellnitz, M. Golubitsky, "The structure of symmetric attractors",
+  *Arch. Rational Mech. Anal.* **123**, 75-98 (1993). Admissible attractor symmetries for
+  D_m-equivariant planar maps (for example, no D_k with 2 < k < m).
+- C. A. Reiter and coauthors (Lafayette College): cyclic, dihedral and polyhedral
+  equivariant polynomial MAPS in two and three dimensions, Monte-Carlo searched (see Claim 1).
+
+None of these is a flow, so none occupies D3 for ODEs.
+
+### (b) Cover constructions for flows (the main hedge)
+
+- C. Letellier, R. Gilmore, "Symmetry groups for 3D dynamical systems",
+  *J. Phys. A: Math. Theor.* **40**, 5597-5620 (2007), and R. Gilmore, C. Letellier,
+  *The Symmetry of Chaos*, OUP 2007. Bibliographic record confirmed; the full text was again
+  not readable from this sandbox. They classify the symmetry groups available to 3-D
+  systems and build equivariant flows by lifting an image system through a covering map.
+  Lifting through a map invariant under a D_n action would produce D_n-equivariant chaotic
+  flows, so such flows are constructible from any chaotic image system and may already appear
+  as examples there. Any publication must cite this and must not claim the group.
+
+### (c) Neighbouring symmetric 3-D flows that are not D3
+
+- Cyclically symmetric (circulant) flows: R. Thomas, *Int. J. Bifurcation Chaos* **9**,
+  1889 (1999); the Halvorsen system; K. Rajagopal, F. Nazarimehr, S. Jafari, J. C. Sprott and
+  coauthors on circulant chaotic flows with coexisting attractors (*IJBC*, 2019 and 2025).
+  The cyclic permutation (x, y, z) -> (y, z, x) is a 120-degree rotation about (1, 1, 1), so
+  these carry C3; with odd nonlinearity (Thomas: sin) they also carry the inversion, giving
+  S6. We checked Thomas' system numerically: the half-turn (x, y, z) -> (-y, -x, -z) about
+  an axis perpendicular to (1, 1, 1) fails at 40/40 random states (it reverses the cyclic
+  order), so Thomas is S6, not D3 or D3d.
+- Three identical coupled cells (Golubitsky-Stewart coupled-cell theory) carry the abstract
+  group S3, which is isomorphic to D3. Acting by coordinate permutations on R^3, though, the
+  transpositions are mirrors (det -1), so the point group is C3v, not the chiral D3; with an
+  odd vector field it grows to D3d, which contains D3 but is larger. We did not search this
+  area systematically.
+- Four-wing quadratic systems. G. Qi, G. Chen, M. A. van Wyk, B. J. van Wyk, Y. Zhang,
+  "A four-wing chaotic attractor generated from a new 3-D quadratic autonomous system",
+  *Chaos Solitons Fractals* **38**, 705-721 (2008): x' = a(y - x) + eyz, y' = cx + dy - xz,
+  z' = -bz + xy. By direct substitution (checked numerically at 40 random states) it is
+  equivariant under (x, y, z) -> (-x, -y, z) only: the half-turns about x and y both fail
+  because a(y - x) and cx + dy mix x and y. So the Qi system is C2, not D2. This corrects
+  the earlier working caveat that it might occupy D2. Systems whose only nonlinear terms are
+  the cross products yz, xz, xy with a diagonal linear part (for example x' = ax - yz,
+  y' = -by + xz, z' = -cz + xy) are D2-equivariant under all three coordinate half-turns,
+  so D2 is plausibly occupied by such systems; we did not identify the first named one.
+- The Guckenheimer-Holmes cycle (Claim 1 (b)) has signed cyclic permutations only and no
+  transposition-type half-turn, so it carries no D3; it is not chaotic in any case.
+
+### Allowed wording
+
+- Allowed: "Trinacria is the first D3 specimen of this atlas"; "to our knowledge, the first
+  designed and certified polynomial flow whose attractor carries exactly the chiral dihedral
+  group D3", always followed by the Letellier-Gilmore hedge above.
+- Forbidden: "first dihedral attractor", "first D_n-equivariant chaotic flow", or any claim
+  that the group itself is new.
+- Shape statements stay catalog-relative (results/trinacria_verification.json,
+  novelty_vs_dysts and novelty_vs_atlas).
+
+### Name check
+
+"Trinacria attractor", "Trinacria chaotic system", "Trinacria dynamical system": no
+dynamical-systems use found (2026-10-21, repeating the selection-stage search recorded in
+results/d3_selection.json). Trinacria Heiberg 1863 is an extinct marine diatom genus
+(Hemiaulaceae) with Paleocene-Eocene fossils from Denmark.
+
+### Search log (Claim 4)
+
+WebSearch, 2026-10-21 (WebFetch fails on DNS here, so verdicts rest on snippets and on our
+own substitution checks): Letellier-Gilmore 2007 J. Phys. A 40 5597; "dihedral symmetry D3
+equivariant three-dimensional chaotic flow attractor Lyapunov"; Qi-Chen 2008 four-wing
+symmetry; Chossat-Golubitsky 1988 symmetry-increasing bifurcation dihedral; "dihedral
+symmetric chaotic attractor ODE three dimensions D_n equivariant vector field"; Reiter
+dodecahedron and cyclic-symmetry papers; Field-Golubitsky Symmetry in Chaos; Sprott and
+coauthors on circulant flows; cross-product four-wing system x' = ax - yz; three coupled cells
+with S3 symmetry; the three Trinacria name queries. An independent reviewer ran six further
+searches with the same outcome (no 3-D D3 flow with a Lyapunov analysis surfaced).
+
