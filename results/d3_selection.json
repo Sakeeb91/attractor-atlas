@@ -3357,5 +3357,25 @@
     "z statistics / counter-rotation failed (v1: d(theta) estimator)"
    ]
   }
- ]
+ ],
+ "user_decision": {
+  "decision": "nominee #8 accepted as the canonical D3 specimen, named Trinacria",
+  "recorded": "2026-10-21",
+  "provenance": "decision relayed to the executing session by the workflow orchestrator as the project owner's decision after this selection reported no candidate passing every gate",
+  "basin_gate": "relaxed from 'at least 90 percent of 48 random ICs in [-2,2]^3 land' to 'every bounded orbit lands on the symmetric set', with mandatory disclosure of the escape fraction in the README",
+  "basin_figures": {
+   "this_selection_draw": "29/48 bounded, all 29 land, 19 escape (rng seed 7, dt 0.004, T = 300)",
+   "shared_protocol_seed0": "24/48 bounded, 24 land (rng seed 0, dt 0.005, T = 120/300)",
+   "shared_protocol_480": "bounded fraction 0.5625 +- 0.0226, every bounded orbit lands",
+   "note": "the 29/48 and 24/48 counts are two draws of the same quantity; quote the 480-IC fraction"
+  },
+  "comparison_same_protocol_seed0_48": {
+   "Aurelia": "48/48",
+   "Naiad": "48/48",
+   "Cassiopea": "43/48",
+   "Mobula": "41/48"
+  },
+  "comparison_source": "results/basin_comparison.json (scripts/basin_comparison.py)",
+  "certification_record": "results/trinacria_verification.json"
+ }
 }
