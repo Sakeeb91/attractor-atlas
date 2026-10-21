@@ -34,11 +34,18 @@ from .dynamics import (
 PARAMS = (ALPHA, BETA, OMEGA, GAMMA, DELTA, NU, LAM, EPS)
 
 
-def find_equilibria(params=PARAMS, n_seeds=600, seed=0, tol=1e-10, box=3.0):
+def find_equilibria(params=PARAMS, n_seeds=600, seed=0, tol=1e-10, box=3.0,
+                    complete_orbits=True):
     """Locate all equilibria (on-axis roots + multi-start search off-axis).
 
     Seeds are uniform in [-box, box]^3; fsolve runs with xtol 1e-13, a root is
-    accepted when ||F|| < tol and deduplicated at distance 1e-6.
+    accepted when ||F|| < tol and deduplicated at distance 1e-6. Equivariance
+    maps every root to a root, so the six D3 images of each root found are
+    then added (each polished by fsolve and re-checked against tol). A
+    D3-orbit is therefore complete as soon as one member is hit, which makes
+    the result independent of the seed draw (a bare 600-seed search misses a
+    member of a size-6 orbit for some seeds). ``complete_orbits=False``
+    returns the bare multi-start result, for comparison.
     """
     nu = params[5]
     found = [np.array([0.0, 0.0, 0.0])]
@@ -55,6 +62,17 @@ def find_equilibria(params=PARAMS, n_seeds=600, seed=0, tol=1e-10, box=3.0):
             continue
         if all(np.linalg.norm(sol - f) > 1e-6 for f in found):
             found.append(sol)
+
+    for root in (list(found) if complete_orbits else []):
+        for g in group_matrices():
+            img = g @ root
+            sol, _, ier, _ = fsolve(
+                lambda s: velocity(s, *params), img, full_output=True, xtol=1e-13
+            )
+            if np.linalg.norm(velocity(sol, *params)) > tol or np.linalg.norm(sol - img) > 1e-6:
+                continue
+            if all(np.linalg.norm(sol - f) > 1e-6 for f in found):
+                found.append(sol)
 
     found.sort(key=lambda s: (round(s[2], 8), round(np.hypot(s[0], s[1]), 8),
                               np.arctan2(s[1], s[0])))

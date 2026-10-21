@@ -20,7 +20,7 @@ from trinacria.dynamics import (
     ALPHA, BETA, DELTA, EPS, GAMMA, LAM, NU, OMEGA, divergence, group_matrices,
     jacobian, velocity,
 )
-from trinacria.equilibria import classify, group_orbits, rotation_sense
+from trinacria.equilibria import classify, find_equilibria, group_orbits, rotation_sense
 from trinacria.lyapunov import kaplan_yorke_dimension, lyapunov_spectrum
 
 # family_d parameter order: (alpha, beta, omega, gamma, delta, nu, lam, eps)
@@ -167,3 +167,19 @@ def test_lyapunov_segments_average_to_spectrum():
     assert seg.shape == (4, 3)
     assert np.allclose(seg.mean(axis=0), spec, atol=1e-12)
     assert kaplan_yorke_dimension([0.3, 0.0, -1.5]) == pytest.approx(2.2)
+
+
+def test_equilibrium_set_is_seed_independent():
+    """With D3-image completion the 600-seed search returns the same 24
+    equilibria in complete orbits for any seed, matching a 3000-seed hunt
+    in [-6, 6]^3."""
+    ref = find_equilibria(n_seeds=3000, box=6.0, seed=5)
+    assert len(ref) == 24
+    for sd in (0, 1, 2):
+        eqs = find_equilibria(seed=sd)
+        assert len(eqs) == len(ref)
+        for e in eqs:
+            assert min(np.linalg.norm(e - f) for f in ref) < 1e-8
+        orbits = group_orbits(eqs)
+        assert all(o["complete"] for o in orbits)
+        assert sorted(o["size"] for o in orbits) == [1, 2, 3, 6, 6, 6]
