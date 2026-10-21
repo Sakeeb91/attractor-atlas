@@ -252,7 +252,7 @@ def test_kappa_forbids_uniform_spin(n):
 
     kappa conjugates w, so i*omega0*w would have to map to conj(i*omega0*w),
     which fails; the allowed rotation rate i*omega*z*w is odd in z, so the
-    flow spins one way above the mid-plane and the other way below it.
+    linear spin has opposite signs above and below the mid-plane.
     """
     rng = np.random.default_rng(55 + n)
     states, params = _states_and_params(rng, 20)

@@ -41,8 +41,11 @@ where sigma_h is the z-flip (w, z) -> (w, -z), sigma_v the vertical mirror
 
   * kappa forbids uniform spin. A constant rate i*omega0*w is not
     kappa-equivariant; the only allowed rotation rate is ODD in z, so the
-    flow turns one way above the mid-plane and the other way below it, and
-    kappa exchanges the two halves (a counter-rotating vortex pair).
+    local spin omega*z has opposite signs above and below the mid-plane, and
+    kappa exchanges the two halves. This is exact for the linear rotation
+    term; on an attractor the other terms also move the orbit around z, so
+    whether each half visibly counter-rotates is a measured property of the
+    specimen, not a consequence of the symmetry alone.
   * omega = delta = eps = 0 collapses the family to D_nh (sigma_h, sigma_v
     become symmetries). The terms i*omega*z*w, i*delta*z*conj(w)^(n-1) and
     eps*Im(w^n) are the D_n-not-D_nh signatures.

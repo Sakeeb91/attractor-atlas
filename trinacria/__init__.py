@@ -1,4 +1,4 @@
-"""The Trinacria attractor: the D3 dihedral member, two counter-rotating halves."""
+"""The Trinacria attractor: the D3 dihedral member, a counter-rotating core."""
 
 from .dynamics import (
     ALPHA, BETA, DELTA, EPS, GAMMA, LAM, NU, OMEGA, DEFAULT_STATE,

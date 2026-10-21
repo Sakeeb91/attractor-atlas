@@ -17,12 +17,21 @@ half-turn axis is a line). All six have determinant +1, so the group is chiral:
 the attractor has no mirror symmetry of any kind.
 
 kappa forbids a uniform spin. A constant rotation rate i*omega0*w is not
-kappa-equivariant, so the only admissible rotation rate is odd in z: the flow
-turns one way above the mid-plane and the other way below it, and kappa
-exchanges the two halves. Trinacria is a counter-rotating pair of vortices
-locked together by a half-turn.
+kappa-equivariant, so the only admissible rotation rate is odd in z: the
+linear spin omega*z has opposite signs above and below the mid-plane, and
+kappa exchanges the two halves. On the attractor this shows as a
+counter-rotating core: within radius 0.6 of the axis (about 55 percent of the
+time) the upper half winds counterclockwise (mean angular velocity +0.59 for
+r < 0.1, +0.47 for 0.1 < r < 0.3, +0.29 for 0.3 < r < 0.6) and the lower
+half clockwise by the same amounts, while the outer parts of each half turn
+weakly the other way (-0.03 and -0.07 above the plane for r > 0.6). The
+time-averaged angular momentum Lz of each half is therefore close to zero
+(+0.002 and -0.005); the counter-rotation is a property of the core, not of
+the half as a whole (64-orbit ensemble, results/trinacria_verification.json,
+single_attractor_test.ensemble.radius_bands).
 
-Trinacria Heiberg 1863 is an extinct marine diatom genus named for the
+Trinacria Heiberg 1863 is an extinct marine diatom genus (Paleocene-Eocene
+fossils from Denmark) named for the
 triskelion of Sicily: three legs turning one way, reversed when the disc is
 turned over. That reversal is what kappa does to this flow's two halves, and a
 diatom frustule is itself two valves stacked top and bottom.
@@ -82,10 +91,15 @@ results/d3_selection.json):
 beta sits at 1.4668 against the search-box face 1.5; this has no bearing on
 the specimen because the values were selected, not optimized.
 
-Basin disclosure. The attractor coexists with escape to infinity: of 48
-initial conditions uniform in [-2, 2]^3, 29 stay bounded and all 29 land on
-the symmetric chaotic set, while 19 escape. Start from DEFAULT_STATE or from
-points near the attractor.
+Basin disclosure. The attractor coexists with escape to infinity. On the
+basin protocol shared with the other specimens (scripts/basin_comparison.py:
+48 ICs uniform in [-2, 2]^3, rng seed 0) 24 stay bounded and all 24 land on
+the symmetric chaotic set; a 480-IC draw gives a bounded fraction of
+0.56 +- 0.02, every bounded orbit landing (the selection stage's own draw gave
+29/48, results/d3_selection.json). For comparison: Aurelia 48/48, Naiad 48/48,
+Cassiopea 43/48, Mobula 41/48. Start from DEFAULT_STATE or from points within
+about 0.1 of the attractor: a few points 0.3 away already lie outside the
+basin and escape at once (scripts/verify_trinacria.py, B9b).
 """
 
 from __future__ import annotations
