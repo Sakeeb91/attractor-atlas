@@ -183,3 +183,16 @@ def test_equilibrium_set_is_seed_independent():
         orbits = group_orbits(eqs)
         assert all(o["complete"] for o in orbits)
         assert sorted(o["size"] for o in orbits) == [1, 2, 3, 6, 6, 6]
+
+
+def test_batched_lyapunov_matches_single_orbit():
+    """The ensemble integrator reproduces lyapunov_spectrum row by row."""
+    from trinacria.lyapunov import lyapunov_spectrum_batch
+
+    s0 = [(0.3, 0.2, 0.1), (0.9, -0.4, -0.6)]
+    batch, seg = lyapunov_spectrum_batch(s0, 1500, dt=0.005, transient=500, segments=3)
+    assert seg.shape == (2, 3, 3)
+    for i, x in enumerate(s0):
+        single = lyapunov_spectrum(n_steps=1500, dt=0.005, transient=500, state0=x)
+        assert np.max(np.abs(batch[i] - single)) < 1e-10
+        assert np.allclose(seg[i].mean(axis=0), batch[i], atol=1e-10)
