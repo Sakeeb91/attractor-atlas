@@ -1,0 +1,1846 @@
+{
+  "system": "Trinacria attractor",
+  "symmetry": "D3 chiral dihedral (Schoenflies), order 6, generators rho:(w,z)->(e^{2 pi i/3} w, z) and kappa:(w,z)->(conj(w),-z) = (x,y,z)->(x,-y,-z), a half-turn about x",
+  "parameters": {
+    "alpha": 1.4773,
+    "beta": 1.4668,
+    "omega": 0.7168,
+    "gamma": 0.8446,
+    "delta": 1.0567,
+    "nu": 2.3978,
+    "lam": 1.2975,
+    "eps": -1.5491
+  },
+  "default_state": [
+    0.3,
+    0.2,
+    0.1
+  ],
+  "quick": false,
+  "selection": "nominee #8 of results/d3_candidates.json, accepted by the user with the relaxed basin gate 'every bounded orbit lands on the symmetric set' (results/d3_selection.json)",
+  "integrator_crosscheck": {
+    "real_batch_vs_package": 4.440892098500626e-16,
+    "complex_family_vs_real": 3.552713678800501e-15
+  },
+  "bounded_4M_steps": true,
+  "long_orbit": {
+    "n_steps": 4000000,
+    "dt": 0.004,
+    "transient_steps": 40000,
+    "finite": true,
+    "max_abs": 1.5729,
+    "centroid": [
+      -0.02385,
+      -0.0128,
+      -0.00327
+    ],
+    "extent": [
+      2.7298,
+      3.145,
+      3.0953
+    ],
+    "centroid_over_extent": [
+      0.00874,
+      0.00407,
+      0.00106
+    ],
+    "iso_min_over_max_span": 0.868,
+    "pca_e3_over_e1": 0.3098,
+    "seconds": 93.8
+  },
+  "extent_min": [
+    -1.1699,
+    -1.5721,
+    -1.5481
+  ],
+  "extent_max": [
+    1.5599,
+    1.5729,
+    1.5472
+  ],
+  "mean_divergence": -1.16387,
+  "mean_divergence_batch_se": 0.00159,
+  "centroid": {
+    "mean": [
+      -0.02385,
+      -0.0128,
+      -0.00327
+    ],
+    "over_extent": [
+      0.00874,
+      0.00407,
+      0.00106
+    ],
+    "threshold": 0.01,
+    "pass": true
+  },
+  "symmetry_residuals": {
+    "n_points": 4000000,
+    "n_base": 60607,
+    "n_query": 5000,
+    "extent": 3.145,
+    "centering": "origin (the only D3-fixed point); no re-centring",
+    "determinants": {
+      "identity": 1.0,
+      "rho": 1.0,
+      "rho2": 1.0,
+      "kappa": 1.0,
+      "rho_kappa": 1.0,
+      "rho2_kappa": 1.0
+    },
+    "group": {
+      "rho": 0.00455,
+      "rho2": 0.00439,
+      "kappa": 0.00451,
+      "rho_kappa": 0.00448,
+      "rho2_kappa": 0.00453
+    },
+    "identity_same_base": 0.0042,
+    "floor_half_vs_half": 0.00452,
+    "floor_directions": [
+      0.00447,
+      0.00457
+    ],
+    "controls": {
+      "z_flip": 0.06957,
+      "y_mirror": 0.06957,
+      "C6": 0.11337,
+      "inversion": 0.07613,
+      "rot37": 0.08288
+    },
+    "max_group": 0.00455,
+    "min_control": 0.06957,
+    "group_over_floor": 1.006,
+    "min_ratio": 15.285,
+    "control_ratios": {
+      "z_flip": 15.287,
+      "y_mirror": 15.285,
+      "C6": 24.909,
+      "inversion": 16.727,
+      "rot37": 18.21
+    },
+    "pass_group_vs_floor": true,
+    "pass_controls_3x": true,
+    "pass_c6_ymirror_5x": true,
+    "pass": true
+  },
+  "single_attractor_test": {
+    "z_symmetry": {
+      "p_positive": 0.49751,
+      "p_positive_batch_se": 0.00727,
+      "ks_z_vs_minus_z": 0.0075,
+      "ks_n_points": 10000,
+      "omega_above": [
+        0.20391,
+        0.00439
+      ],
+      "omega_below": [
+        -0.20484,
+        0.00382
+      ],
+      "omega_estimator": "field-based (x ydot - y xdot)/(x^2+y^2), batch means (20 batches), [mean, se]",
+      "omega_mismatch_over_mean_speed": 0.0045,
+      "omega_mismatch_over_se": 0.16,
+      "Lz_above": [
+        0.00152,
+        0.00232
+      ],
+      "Lz_below": [
+        -0.00283,
+        0.00252
+      ],
+      "dtheta_dt_above_v1": 0.20297,
+      "dtheta_dt_below_v1": -0.20389,
+      "longest_dwell_fraction": 0.00257,
+      "longest_dwell_time": 41.07,
+      "n_sign_changes": 2622,
+      "pass_p_positive": true,
+      "pass_ks": true,
+      "pass_counter_rotation_v1": true,
+      "pass_counter_rotation": true
+    },
+    "basin": {
+      "protocol": "48 ICs uniform in [-2,2]^3, rng seed 0, dt 0.005, batched complex RK4 (atlas.family_d), escape |X|>50; bounded count at T=120; landing on T in (200,300], every 10th step, rho_id <= 0.02 vs the B5 reference",
+      "n_ic": 48,
+      "n_bounded_T120": 24,
+      "n_bounded_T300": 24,
+      "n_escaped_T300": 24,
+      "n_landed": 24,
+      "bounded_fraction": 0.5,
+      "landed_fraction_of_bounded": 1.0,
+      "rho_id": [
+        0.00561,
+        null,
+        0.00413,
+        null,
+        0.00467,
+        null,
+        0.00455,
+        0.00444,
+        null,
+        null,
+        0.00476,
+        0.00498,
+        null,
+        0.00385,
+        0.00421,
+        null,
+        null,
+        null,
+        0.00479,
+        null,
+        null,
+        0.00414,
+        null,
+        null,
+        null,
+        0.00438,
+        null,
+        0.00411,
+        0.00442,
+        null,
+        0.00483,
+        null,
+        null,
+        0.00477,
+        0.0044,
+        0.00487,
+        null,
+        null,
+        null,
+        null,
+        0.00379,
+        0.00453,
+        null,
+        0.0039,
+        0.00416,
+        0.00434,
+        null,
+        0.00476
+      ],
+      "rho_kappa": [
+        0.0055,
+        null,
+        0.00432,
+        null,
+        0.00432,
+        null,
+        0.00455,
+        0.00426,
+        null,
+        null,
+        0.00445,
+        0.00493,
+        null,
+        0.00398,
+        0.00403,
+        null,
+        null,
+        null,
+        0.00465,
+        null,
+        null,
+        0.00421,
+        null,
+        null,
+        null,
+        0.00439,
+        null,
+        0.00446,
+        0.00444,
+        null,
+        0.00476,
+        null,
+        null,
+        0.0047,
+        0.00456,
+        0.0053,
+        null,
+        null,
+        null,
+        null,
+        0.0038,
+        0.00486,
+        null,
+        0.00415,
+        0.00419,
+        0.00438,
+        null,
+        0.00434
+      ],
+      "threshold": 0.02,
+      "comparison_same_protocol": {
+        "Aurelia": "48/48",
+        "Naiad": "48/48",
+        "Cassiopea": "43/48",
+        "Mobula": "41/48"
+      },
+      "pass_strict_48_of_48": false,
+      "pass_multistable_90pct": false,
+      "pass_relaxed_every_bounded_lands": true,
+      "reconciliation": "the selection stage (results/d3_selection.json) reported 29/48 bounded from a different IC draw (rng seed 7 after reference subsampling, dt 0.004, T = 300); the shared comparison protocol used for Aurelia/Naiad/Cassiopea/Mobula (rng seed 0, dt 0.005, T = 120) gives the n_bounded_T120 count recorded here, and the 480-IC sample in basin_large_sample gives the bounded fraction with its standard error"
+    },
+    "basin_large_sample": {
+      "protocol": "480 ICs uniform in [-2,2]^3, rng seed 1, otherwise identical to the basin protocol",
+      "n_ic": 480,
+      "n_bounded_T120": 270,
+      "n_bounded_T300": 270,
+      "n_landed": 270,
+      "bounded_fraction": 0.5625,
+      "bounded_fraction_binomial_se": 0.0226,
+      "max_rho_id_of_bounded": 0.00631,
+      "every_bounded_lands": true
+    },
+    "basin_near_attractor": {
+      "protocol": "48 ICs = random B5 orbit points + uniform(-0.3,0.3)^3, rng seed 5; same integration and landing rule as the basin protocol",
+      "n_ic": 48,
+      "n_bounded_T300": 48,
+      "n_landed": 48,
+      "rho_id": [
+        0.00386,
+        0.00436,
+        0.00394,
+        0.00555,
+        0.0044,
+        0.00451,
+        0.00426,
+        0.00417,
+        0.00421,
+        0.0044,
+        0.00423,
+        0.00433,
+        0.00483,
+        0.0057,
+        0.00486,
+        0.00482,
+        0.00584,
+        0.00516,
+        0.00511,
+        0.00445,
+        0.00444,
+        0.00433,
+        0.00439,
+        0.00481,
+        0.00413,
+        0.00393,
+        0.0044,
+        0.00462,
+        0.00432,
+        0.00443,
+        0.00416,
+        0.0044,
+        0.00451,
+        0.00399,
+        0.00476,
+        0.00432,
+        0.00381,
+        0.00503,
+        0.00401,
+        0.00463,
+        0.00502,
+        0.00483,
+        0.0046,
+        0.00428,
+        0.00436,
+        0.00432,
+        0.00472,
+        0.00393
+      ],
+      "rho_kappa": [
+        0.00385,
+        0.00466,
+        0.00415,
+        0.00555,
+        0.00428,
+        0.00433,
+        0.00452,
+        0.00457,
+        0.00381,
+        0.00414,
+        0.0044,
+        0.0045,
+        0.00486,
+        0.00571,
+        0.00491,
+        0.00425,
+        0.00634,
+        0.00571,
+        0.00501,
+        0.00413,
+        0.00443,
+        0.00494,
+        0.00433,
+        0.00449,
+        0.00453,
+        0.00423,
+        0.00473,
+        0.00478,
+        0.00378,
+        0.00451,
+        0.00423,
+        0.00434,
+        0.00384,
+        0.00426,
+        0.00484,
+        0.00406,
+        0.00371,
+        0.00474,
+        0.00373,
+        0.00462,
+        0.0044,
+        0.00449,
+        0.00405,
+        0.00442,
+        0.00461,
+        0.00429,
+        0.004,
+        0.00434
+      ],
+      "pass": true
+    },
+    "image_launch": {
+      "x0": [
+        0.3,
+        0.2,
+        0.1
+      ],
+      "dt": 0.004,
+      "transient_steps": 40000,
+      "n_steps": 1000000,
+      "sample_every": 8,
+      "bounded": [
+        true,
+        true,
+        true
+      ],
+      "early_equivariance_kappa": 0.0,
+      "early_equivariance_rho": 2.631228568361621e-14,
+      "early_window_steps": 2000,
+      "cloud_residuals": {
+        "kappa_x0->x0": 0.00484,
+        "rho_x0->x0": 0.00481,
+        "x0->kappa_x0": 0.00506,
+        "rho_x0->kappa_x0": 0.00508,
+        "x0->rho_x0": 0.00522,
+        "kappa_x0->rho_x0": 0.00501
+      },
+      "cloud_residual_limit": 0.00679,
+      "fingerprint_distances": {
+        "x0|kappa_x0": 0.0302,
+        "x0|rho_x0": 0.0457,
+        "kappa_x0|rho_x0": 0.052
+      },
+      "fingerprint_floor": 0.0549,
+      "fingerprint_self_halves_x0": 0.0692,
+      "pass_equivariance": true,
+      "pass_cloud_residuals": true,
+      "pass_fingerprint_v1": true,
+      "pass": true
+    }
+  },
+  "equilibria": [
+    {
+      "point": [
+        0.547507,
+        -4.166575,
+        -3.348565
+      ],
+      "radius_xy": 4.202393,
+      "angle_deg": -82.514,
+      "eigenvalues": [
+        [
+          -70.46998,
+          0.0
+        ],
+        [
+          43.93081,
+          0.0
+        ],
+        [
+          2.58031,
+          0.0
+        ]
+      ],
+      "type": "saddle",
+      "rotation_sense_Jxy_minus_Jyx": 4.800503,
+      "residual_norm": 1.0048591735576161e-14
+    },
+    {
+      "point": [
+        3.334606,
+        2.557442,
+        -3.348565
+      ],
+      "radius_xy": 4.202393,
+      "angle_deg": 37.486,
+      "eigenvalues": [
+        [
+          -70.46998,
+          0.0
+        ],
+        [
+          2.58031,
+          0.0
+        ],
+        [
+          43.93081,
+          0.0
+        ]
+      ],
+      "type": "saddle",
+      "rotation_sense_Jxy_minus_Jyx": 4.800503,
+      "residual_norm": 2.0097183471152322e-14
+    },
+    {
+      "point": [
+        -3.882113,
+        1.609132,
+        -3.348565
+      ],
+      "radius_xy": 4.202393,
+      "angle_deg": 157.486,
+      "eigenvalues": [
+        [
+          -70.46998,
+          0.0
+        ],
+        [
+          2.58031,
+          0.0
+        ],
+        [
+          43.93081,
+          0.0
+        ]
+      ],
+      "type": "saddle",
+      "rotation_sense_Jxy_minus_Jyx": 4.800503,
+      "residual_norm": 4.322062729257126e-14
+    },
+    {
+      "point": [
+        0.0,
+        0.0,
+        -1.548483
+      ],
+      "radius_xy": 0.0,
+      "angle_deg": null,
+      "eigenvalues": [
+        [
+          2.07547,
+          1.10995
+        ],
+        [
+          2.07547,
+          -1.10995
+        ],
+        [
+          -4.7956,
+          0.0
+        ]
+      ],
+      "type": "saddle-focus",
+      "rotation_sense_Jxy_minus_Jyx": 2.219905,
+      "residual_norm": 4.440892098500626e-16
+    },
+    {
+      "point": [
+        0.356191,
+        -0.765287,
+        -1.289128
+      ],
+      "radius_xy": 0.844119,
+      "angle_deg": -65.0411,
+      "eigenvalues": [
+        [
+          3.14015,
+          0.0
+        ],
+        [
+          -2.33796,
+          1.7576
+        ],
+        [
+          -2.33796,
+          -1.7576
+        ]
+      ],
+      "type": "saddle-focus",
+      "rotation_sense_Jxy_minus_Jyx": 1.848094,
+      "residual_norm": 2.9893669801409083e-16
+    },
+    {
+      "point": [
+        0.484663,
+        0.691114,
+        -1.289128
+      ],
+      "radius_xy": 0.844119,
+      "angle_deg": 54.9589,
+      "eigenvalues": [
+        [
+          3.14015,
+          0.0
+        ],
+        [
+          -2.33796,
+          1.7576
+        ],
+        [
+          -2.33796,
+          -1.7576
+        ]
+      ],
+      "type": "saddle-focus",
+      "rotation_sense_Jxy_minus_Jyx": 1.848094,
+      "residual_norm": 5.551115123125783e-17
+    },
+    {
+      "point": [
+        -0.840854,
+        0.074173,
+        -1.289128
+      ],
+      "radius_xy": 0.844119,
+      "angle_deg": 174.9589,
+      "eigenvalues": [
+        [
+          -2.33796,
+          1.7576
+        ],
+        [
+          -2.33796,
+          -1.7576
+        ],
+        [
+          3.14015,
+          0.0
+        ]
+      ],
+      "type": "saddle-focus",
+      "rotation_sense_Jxy_minus_Jyx": 1.848094,
+      "residual_norm": 4.2457866502527573e-16
+    },
+    {
+      "point": [
+        -0.653849,
+        -0.455625,
+        -0.70094
+      ],
+      "radius_xy": 0.796939,
+      "angle_deg": -145.1299,
+      "eigenvalues": [
+        [
+          0.23234,
+          2.95055
+        ],
+        [
+          0.23234,
+          -2.95055
+        ],
+        [
+          -1.84683,
+          0.0
+        ]
+      ],
+      "type": "saddle-focus",
+      "rotation_sense_Jxy_minus_Jyx": 1.004868,
+      "residual_norm": 3.416642588700187e-15
+    },
+    {
+      "point": [
+        0.721507,
+        -0.338437,
+        -0.70094
+      ],
+      "radius_xy": 0.796939,
+      "angle_deg": -25.1299,
+      "eigenvalues": [
+        [
+          0.23234,
+          2.95055
+        ],
+        [
+          0.23234,
+          -2.95055
+        ],
+        [
+          -1.84683,
+          0.0
+        ]
+      ],
+      "type": "saddle-focus",
+      "rotation_sense_Jxy_minus_Jyx": 1.004868,
+      "residual_norm": 6.080941944488118e-16
+    },
+    {
+      "point": [
+        -0.067658,
+        0.794062,
+        -0.70094
+      ],
+      "radius_xy": 0.796939,
+      "angle_deg": 94.8701,
+      "eigenvalues": [
+        [
+          -1.84683,
+          0.0
+        ],
+        [
+          0.23234,
+          2.95055
+        ],
+        [
+          0.23234,
+          -2.95055
+        ]
+      ],
+      "type": "saddle-focus",
+      "rotation_sense_Jxy_minus_Jyx": 1.004868,
+      "residual_norm": 2.0816681711721685e-16
+    },
+    {
+      "point": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "radius_xy": 0.0,
+      "angle_deg": null,
+      "eigenvalues": [
+        [
+          -1.4668,
+          0.0
+        ],
+        [
+          -1.4668,
+          0.0
+        ],
+        [
+          2.3978,
+          0.0
+        ]
+      ],
+      "type": "saddle",
+      "rotation_sense_Jxy_minus_Jyx": 0.0,
+      "residual_norm": 0.0
+    },
+    {
+      "point": [
+        -0.86834,
+        -1.504009,
+        -0.0
+      ],
+      "radius_xy": 1.73668,
+      "angle_deg": -120.0,
+      "eigenvalues": [
+        [
+          -2.95797,
+          7.74852
+        ],
+        [
+          -2.95797,
+          -7.74852
+        ],
+        [
+          1.4668,
+          0.0
+        ]
+      ],
+      "type": "saddle-focus",
+      "rotation_sense_Jxy_minus_Jyx": 0.0,
+      "residual_norm": 8.757285013895436e-15
+    },
+    {
+      "point": [
+        1.73668,
+        -0.0,
+        -0.0
+      ],
+      "radius_xy": 1.73668,
+      "angle_deg": -0.0,
+      "eigenvalues": [
+        [
+          1.4668,
+          0.0
+        ],
+        [
+          -2.95797,
+          7.74852
+        ],
+        [
+          -2.95797,
+          -7.74852
+        ]
+      ],
+      "type": "saddle-focus",
+      "rotation_sense_Jxy_minus_Jyx": 0.0,
+      "residual_norm": 1.2292562302873734e-15
+    },
+    {
+      "point": [
+        -0.86834,
+        1.504009,
+        0.0
+      ],
+      "radius_xy": 1.73668,
+      "angle_deg": 120.0,
+      "eigenvalues": [
+        [
+          -2.95797,
+          7.74852
+        ],
+        [
+          -2.95797,
+          -7.74852
+        ],
+        [
+          1.4668,
+          0.0
+        ]
+      ],
+      "type": "saddle-focus",
+      "rotation_sense_Jxy_minus_Jyx": 0.0,
+      "residual_norm": 4.681671004655482e-17
+    },
+    {
+      "point": [
+        -0.067658,
+        -0.794062,
+        0.70094
+      ],
+      "radius_xy": 0.796939,
+      "angle_deg": -94.8701,
+      "eigenvalues": [
+        [
+          -1.84683,
+          0.0
+        ],
+        [
+          0.23234,
+          2.95055
+        ],
+        [
+          0.23234,
+          -2.95055
+        ]
+      ],
+      "type": "saddle-focus",
+      "rotation_sense_Jxy_minus_Jyx": -1.004868,
+      "residual_norm": 2.2929868617541516e-16
+    },
+    {
+      "point": [
+        0.721507,
+        0.338437,
+        0.70094
+      ],
+      "radius_xy": 0.796939,
+      "angle_deg": 25.1299,
+      "eigenvalues": [
+        [
+          0.23234,
+          2.95055
+        ],
+        [
+          0.23234,
+          -2.95055
+        ],
+        [
+          -1.84683,
+          0.0
+        ]
+      ],
+      "type": "saddle-focus",
+      "rotation_sense_Jxy_minus_Jyx": -1.004868,
+      "residual_norm": 2.482534153247273e-16
+    },
+    {
+      "point": [
+        -0.653849,
+        0.455625,
+        0.70094
+      ],
+      "radius_xy": 0.796939,
+      "angle_deg": 145.1299,
+      "eigenvalues": [
+        [
+          0.23234,
+          2.95055
+        ],
+        [
+          0.23234,
+          -2.95055
+        ],
+        [
+          -1.84683,
+          0.0
+        ]
+      ],
+      "type": "saddle-focus",
+      "rotation_sense_Jxy_minus_Jyx": -1.004868,
+      "residual_norm": 1.6653345369377348e-16
+    },
+    {
+      "point": [
+        -0.840854,
+        -0.074173,
+        1.289128
+      ],
+      "radius_xy": 0.844119,
+      "angle_deg": -174.9589,
+      "eigenvalues": [
+        [
+          -2.33796,
+          1.7576
+        ],
+        [
+          -2.33796,
+          -1.7576
+        ],
+        [
+          3.14015,
+          0.0
+        ]
+      ],
+      "type": "saddle-focus",
+      "rotation_sense_Jxy_minus_Jyx": -1.848094,
+      "residual_norm": 3.7190399955649e-15
+    },
+    {
+      "point": [
+        0.484663,
+        -0.691114,
+        1.289128
+      ],
+      "radius_xy": 0.844119,
+      "angle_deg": -54.9589,
+      "eigenvalues": [
+        [
+          3.14015,
+          0.0
+        ],
+        [
+          -2.33796,
+          1.7576
+        ],
+        [
+          -2.33796,
+          -1.7576
+        ]
+      ],
+      "type": "saddle-focus",
+      "rotation_sense_Jxy_minus_Jyx": -1.848094,
+      "residual_norm": 5.748822300757345e-16
+    },
+    {
+      "point": [
+        0.356191,
+        0.765287,
+        1.289128
+      ],
+      "radius_xy": 0.844119,
+      "angle_deg": 65.0411,
+      "eigenvalues": [
+        [
+          3.14015,
+          0.0
+        ],
+        [
+          -2.33796,
+          1.7576
+        ],
+        [
+          -2.33796,
+          -1.7576
+        ]
+      ],
+      "type": "saddle-focus",
+      "rotation_sense_Jxy_minus_Jyx": -1.848094,
+      "residual_norm": 9.371360918460988e-16
+    },
+    {
+      "point": [
+        0.0,
+        0.0,
+        1.548483
+      ],
+      "radius_xy": 0.0,
+      "angle_deg": null,
+      "eigenvalues": [
+        [
+          2.07547,
+          1.10995
+        ],
+        [
+          2.07547,
+          -1.10995
+        ],
+        [
+          -4.7956,
+          0.0
+        ]
+      ],
+      "type": "saddle-focus",
+      "rotation_sense_Jxy_minus_Jyx": -2.219905,
+      "residual_norm": 4.440892098500626e-16
+    },
+    {
+      "point": [
+        -3.882113,
+        -1.609132,
+        3.348565
+      ],
+      "radius_xy": 4.202393,
+      "angle_deg": -157.486,
+      "eigenvalues": [
+        [
+          -70.46998,
+          0.0
+        ],
+        [
+          2.58031,
+          0.0
+        ],
+        [
+          43.93081,
+          0.0
+        ]
+      ],
+      "type": "saddle",
+      "rotation_sense_Jxy_minus_Jyx": -4.800503,
+      "residual_norm": 4.322062729257126e-14
+    },
+    {
+      "point": [
+        3.334606,
+        -2.557442,
+        3.348565
+      ],
+      "radius_xy": 4.202393,
+      "angle_deg": -37.486,
+      "eigenvalues": [
+        [
+          -70.46998,
+          0.0
+        ],
+        [
+          2.58031,
+          0.0
+        ],
+        [
+          43.93081,
+          0.0
+        ]
+      ],
+      "type": "saddle",
+      "rotation_sense_Jxy_minus_Jyx": -4.800503,
+      "residual_norm": 3.117493601007525e-14
+    },
+    {
+      "point": [
+        0.547507,
+        4.166575,
+        3.348565
+      ],
+      "radius_xy": 4.202393,
+      "angle_deg": 82.514,
+      "eigenvalues": [
+        [
+          -70.46998,
+          0.0
+        ],
+        [
+          43.93081,
+          0.0
+        ],
+        [
+          2.58031,
+          0.0
+        ]
+      ],
+      "type": "saddle",
+      "rotation_sense_Jxy_minus_Jyx": -4.800503,
+      "residual_norm": 3.197442310920451e-14
+    }
+  ],
+  "equilibrium_orbits": [
+    {
+      "members": [
+        0,
+        1,
+        2,
+        21,
+        22,
+        23
+      ],
+      "size": 6,
+      "complete": true,
+      "label": "saddle",
+      "representative": [
+        0.547507,
+        -4.166575,
+        -3.348565
+      ],
+      "spectrum": [
+        [
+          -70.46998,
+          0.0
+        ],
+        [
+          2.58031,
+          0.0
+        ],
+        [
+          43.93081,
+          0.0
+        ]
+      ],
+      "spectrum_gap": 1.9895196601282805e-13,
+      "elements_mapping_representative_to_member": {
+        "0": [
+          "identity"
+        ],
+        "1": [
+          "rho"
+        ],
+        "2": [
+          "rho2"
+        ],
+        "21": [
+          "rho_kappa"
+        ],
+        "22": [
+          "rho2_kappa"
+        ],
+        "23": [
+          "kappa"
+        ]
+      }
+    },
+    {
+      "members": [
+        3,
+        20
+      ],
+      "size": 2,
+      "complete": true,
+      "label": "saddle-focus",
+      "representative": [
+        0.0,
+        0.0,
+        -1.548483
+      ],
+      "spectrum": [
+        [
+          -4.7956,
+          0.0
+        ],
+        [
+          2.07547,
+          -1.10995
+        ],
+        [
+          2.07547,
+          1.10995
+        ]
+      ],
+      "spectrum_gap": 0.0,
+      "elements_mapping_representative_to_member": {
+        "3": [
+          "identity",
+          "rho",
+          "rho2"
+        ],
+        "20": [
+          "kappa",
+          "rho_kappa",
+          "rho2_kappa"
+        ]
+      }
+    },
+    {
+      "members": [
+        4,
+        5,
+        6,
+        17,
+        18,
+        19
+      ],
+      "size": 6,
+      "complete": true,
+      "label": "saddle-focus",
+      "representative": [
+        0.356191,
+        -0.765287,
+        -1.289128
+      ],
+      "spectrum": [
+        [
+          -2.33796,
+          -1.7576
+        ],
+        [
+          -2.33796,
+          1.7576
+        ],
+        [
+          3.14015,
+          0.0
+        ]
+      ],
+      "spectrum_gap": 4.440892098500626e-15,
+      "elements_mapping_representative_to_member": {
+        "4": [
+          "identity"
+        ],
+        "5": [
+          "rho"
+        ],
+        "6": [
+          "rho2"
+        ],
+        "17": [
+          "rho_kappa"
+        ],
+        "18": [
+          "rho2_kappa"
+        ],
+        "19": [
+          "kappa"
+        ]
+      }
+    },
+    {
+      "members": [
+        7,
+        8,
+        9,
+        14,
+        15,
+        16
+      ],
+      "size": 6,
+      "complete": true,
+      "label": "saddle-focus",
+      "representative": [
+        -0.653849,
+        -0.455625,
+        -0.70094
+      ],
+      "spectrum": [
+        [
+          -1.84683,
+          0.0
+        ],
+        [
+          0.23234,
+          -2.95055
+        ],
+        [
+          0.23234,
+          2.95055
+        ]
+      ],
+      "spectrum_gap": 7.31742470503482e-15,
+      "elements_mapping_representative_to_member": {
+        "7": [
+          "identity"
+        ],
+        "8": [
+          "rho"
+        ],
+        "9": [
+          "rho2"
+        ],
+        "14": [
+          "rho_kappa"
+        ],
+        "15": [
+          "rho2_kappa"
+        ],
+        "16": [
+          "kappa"
+        ]
+      }
+    },
+    {
+      "members": [
+        10
+      ],
+      "size": 1,
+      "complete": true,
+      "label": "saddle",
+      "representative": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "spectrum": [
+        [
+          -1.4668,
+          0.0
+        ],
+        [
+          -1.4668,
+          0.0
+        ],
+        [
+          2.3978,
+          0.0
+        ]
+      ],
+      "spectrum_gap": 0.0,
+      "elements_mapping_representative_to_member": {
+        "10": [
+          "identity",
+          "rho",
+          "rho2",
+          "kappa",
+          "rho_kappa",
+          "rho2_kappa"
+        ]
+      }
+    },
+    {
+      "members": [
+        11,
+        12,
+        13
+      ],
+      "size": 3,
+      "complete": true,
+      "label": "saddle-focus",
+      "representative": [
+        -0.86834,
+        -1.504009,
+        -0.0
+      ],
+      "spectrum": [
+        [
+          -2.95797,
+          -7.74852
+        ],
+        [
+          -2.95797,
+          7.74852
+        ],
+        [
+          1.4668,
+          0.0
+        ]
+      ],
+      "spectrum_gap": 9.155133597044475e-15,
+      "elements_mapping_representative_to_member": {
+        "11": [
+          "identity",
+          "rho_kappa"
+        ],
+        "12": [
+          "rho",
+          "rho2_kappa"
+        ],
+        "13": [
+          "rho2",
+          "kappa"
+        ]
+      }
+    }
+  ],
+  "equilibrium_checks": {
+    "n_equilibria": 24,
+    "on_axis_triple_present": true,
+    "orbit_sizes": [
+      6,
+      2,
+      6,
+      6,
+      1,
+      3
+    ],
+    "all_orbits_complete": true,
+    "orbit_sizes_valid": true,
+    "max_spectrum_gap_within_orbit": 1.9895196601282805e-13,
+    "n_plane_equilibria_off_origin": 3,
+    "plane_equilibria_angles_deg": [
+      -120.0,
+      -0.0,
+      120.0
+    ],
+    "plane_equilibria_max_half_turn_defect": 2.4044619517043526e-15,
+    "on_axis_pair_rotation_sense": [
+      2.219905,
+      -2.219905
+    ],
+    "on_axis_pair_spectrum_gap": 0.0,
+    "origin_eigenvalues": [
+      -1.4668,
+      -1.4668,
+      2.3978
+    ],
+    "origin_note": "saddle with the double real eigenvalue -beta (rotation rate omega*z vanishes at z=0) and nu along z; not a saddle-focus, so the homoclinic story of the C_n specimens does not transfer",
+    "pass": true
+  },
+  "novelty_vs_dysts": {
+    "catalog_size": 135,
+    "nearest": "Coullet",
+    "distance": 0.2119,
+    "next": [
+      [
+        "JerkCircuit",
+        0.2411
+      ],
+      [
+        "HyperJha",
+        0.2558
+      ],
+      [
+        "NoseHoover",
+        0.2681
+      ]
+    ],
+    "noise_floor": 0.0549,
+    "interpretable_above": 0.1098,
+    "median_nn_spacing": 0.1149,
+    "interpretable": true,
+    "distinct": true,
+    "nn_rank_unstable": true,
+    "self_sampling_check_first_eighth_vs_full": 0.0578,
+    "hedge": "catalog-relative shape distance against 135 dysts systems, not a literature claim"
+  },
+  "novelty_vs_atlas": {
+    "method": "fingerprint of each specimen's default trajectory() (500k steps at dt 0.004) [::8] vs the Trinacria 4M-step orbit [::8]",
+    "distances": {
+      "Aurelia": 0.2899,
+      "Naiad": 0.6257,
+      "Cassiopea": 0.2166,
+      "Mobula": 0.6436
+    },
+    "nearest": "Cassiopea",
+    "nearest_distance": 0.2166,
+    "aurelia_above_0.110": true
+  },
+  "lyapunov_spectrum": [
+    0.31844,
+    -0.00015,
+    -1.48342
+  ],
+  "lyapunov_segment_sem_lambda1": 0.00898,
+  "lyapunov_settings": {
+    "dt": 0.005,
+    "n_steps": 600000,
+    "transient_steps": 20000,
+    "state0": [
+      0.3,
+      0.2,
+      0.1
+    ],
+    "segments": 10
+  },
+  "lyapunov_sum": -1.16513,
+  "kaplan_yorke_dimension": 2.21457,
+  "dt_convergence": {
+    "0.01": [
+      0.34606,
+      -0.00014,
+      -1.51777,
+      0.01436
+    ],
+    "0.005": [
+      0.31826,
+      -0.0006,
+      -1.48054,
+      0.01073
+    ],
+    "0.0025": [
+      0.33954,
+      -0.0009,
+      -1.50268,
+      0.01096
+    ],
+    "0.00125": [
+      0.34419,
+      0.0003,
+      -1.5072,
+      0.01494
+    ],
+    "0.000625": [
+      0.32011,
+      0.00288,
+      -1.49581,
+      0.01923
+    ]
+  },
+  "dt_convergence_summary": {
+    "format": "{dt: [lambda1, lambda2, lambda3, segment_sem_lambda1]}; T = 2000 after T = 100 transient from DEFAULT_STATE; spot check dt 0.000625 over T = 500",
+    "successive_relative_change": [
+      0.0873,
+      0.0627,
+      0.0135
+    ],
+    "finest_two_relative_change": 0.0135,
+    "monotone": false,
+    "drift_coarsest_to_finest": 0.00187,
+    "drift_limit_2x_combined_sem": 0.04144,
+    "spot_check_minus_finest": -0.02408,
+    "spot_check_combined_sem": 0.02435,
+    "pass_successive_10pct": true,
+    "pass_finest_two_5pct": true,
+    "pass_no_monotone_drift": true
+  },
+  "largest_exponent_across_ics": [
+    0.32276,
+    0.35143,
+    0.30521,
+    0.3583,
+    0.32118
+  ],
+  "ic_consistency": {
+    "ics": [
+      [
+        0.57789,
+        -0.41091,
+        -1.3043
+      ],
+      [
+        1.17674,
+        -0.44846,
+        -0.88611
+      ],
+      [
+        0.988,
+        -0.39247,
+        -0.5912
+      ],
+      [
+        -0.77662,
+        -0.59332,
+        0.03458
+      ],
+      [
+        -0.16186,
+        -0.33032,
+        0.13285
+      ]
+    ],
+    "protocol": "5 ICs = random points of a short orbit from DEFAULT_STATE + uniform(-0.3,0.3)^3 (rng seed 11); QR 150k steps at dt 0.005 after 20k transient steps",
+    "spread_over_mean": 0.16,
+    "pass": true
+  },
+  "sum_lambda_vs_divergence": {
+    "sum_lambda": -1.16513,
+    "mean_divergence": -1.16387,
+    "abs_difference": 0.00126,
+    "relative": 0.0011,
+    "pass": true
+  },
+  "qr_job_seconds": {
+    "dt_0.00125": 149.3,
+    "dt_0.000625": 76.6,
+    "dt_0.0025": 73.6,
+    "main": 55.5,
+    "dt_0.005": 37.0,
+    "dt_0.01": 18.6,
+    "ic_0": 14.2,
+    "ic_1": 13.8,
+    "ic_2": 13.8,
+    "ic_3": 14.0,
+    "ic_4": 14.2
+  },
+  "pass_fail_table": [
+    {
+      "id": "B1a",
+      "criterion": "lambda1 >= 0.15 (dt 0.005, 600k steps)",
+      "value": 0.31844,
+      "pass": true,
+      "kind": "gate"
+    },
+    {
+      "id": "B1b",
+      "criterion": "|lambda2| <= 0.01",
+      "value": -0.00015,
+      "pass": true,
+      "kind": "gate"
+    },
+    {
+      "id": "B1c",
+      "criterion": "lambda3 < 0 and sum < 0",
+      "value": [
+        -1.48342,
+        -1.16513
+      ],
+      "pass": true,
+      "kind": "gate"
+    },
+    {
+      "id": "B2a",
+      "criterion": "dt halving 0.01->0.00125: successive change <= 10%",
+      "value": [
+        0.0873,
+        0.0627,
+        0.0135
+      ],
+      "pass": true,
+      "kind": "gate"
+    },
+    {
+      "id": "B2b",
+      "criterion": "finest two dt within 5%",
+      "value": 0.0135,
+      "pass": true,
+      "kind": "gate"
+    },
+    {
+      "id": "B2c",
+      "criterion": "no monotone drift beyond 2x combined segment SEM",
+      "value": {
+        "monotone": false,
+        "drift": 0.00187,
+        "limit": 0.04144
+      },
+      "pass": true,
+      "kind": "gate"
+    },
+    {
+      "id": "B3",
+      "criterion": "|sum lambda - mean div| <= 3% of |mean div|",
+      "value": 0.0011,
+      "pass": true,
+      "kind": "gate"
+    },
+    {
+      "id": "B4a",
+      "criterion": "2 < D_KY < 3",
+      "value": 2.21457,
+      "pass": true,
+      "kind": "gate"
+    },
+    {
+      "id": "B4b",
+      "criterion": "D_KY in beauty band 2.05-2.5",
+      "value": 2.21457,
+      "pass": true,
+      "kind": "beauty"
+    },
+    {
+      "id": "B5a",
+      "criterion": "4M-step orbit finite and max|X| < 10",
+      "value": 1.5729,
+      "pass": true,
+      "kind": "gate"
+    },
+    {
+      "id": "B5b",
+      "criterion": "mean divergence < 0",
+      "value": -1.16387,
+      "pass": true,
+      "kind": "gate"
+    },
+    {
+      "id": "B5c",
+      "criterion": "|centroid_i|/extent_i <= 0.01",
+      "value": [
+        0.00874,
+        0.00407,
+        0.00106
+      ],
+      "pass": true,
+      "kind": "gate"
+    },
+    {
+      "id": "B6",
+      "criterion": "5 near-attractor ICs: all lambda1 > 0.10, spread <= 25%",
+      "value": {
+        "lambda1": [
+          0.32276,
+          0.35143,
+          0.30521,
+          0.3583,
+          0.32118
+        ],
+        "spread": 0.16
+      },
+      "pass": true,
+      "kind": "gate"
+    },
+    {
+      "id": "B7",
+      "criterion": "equilibria: on-axis triple, D3-orbits of size 1/2/3/6, spectra equal within orbits (1e-6), plane points on half-turn axes, on-axis pair counter-rotating",
+      "value": {
+        "orbit_sizes": [
+          6,
+          2,
+          6,
+          6,
+          1,
+          3
+        ],
+        "gap": 1.9895196601282805e-13,
+        "sense": [
+          2.219905,
+          -2.219905
+        ]
+      },
+      "pass": true,
+      "kind": "gate"
+    },
+    {
+      "id": "B8a",
+      "criterion": "max D3 residual <= 1.5 x floor and <= 0.015",
+      "value": {
+        "max_group": 0.00455,
+        "floor": 0.00452
+      },
+      "pass": true,
+      "kind": "gate"
+    },
+    {
+      "id": "B8b",
+      "criterion": "every control >= 3x max D3 residual",
+      "value": 15.285,
+      "pass": true,
+      "kind": "gate"
+    },
+    {
+      "id": "B8c",
+      "criterion": "C6 and y-mirror controls >= 5x",
+      "value": [
+        24.909,
+        15.285
+      ],
+      "pass": true,
+      "kind": "gate"
+    },
+    {
+      "id": "B9a-strict",
+      "criterion": "48/48 random ICs in [-2,2]^3 land on the symmetric set (pre-registered)",
+      "value": "24/48 landed, 24 escaped",
+      "pass": false,
+      "kind": "gate (relaxed by user decision)"
+    },
+    {
+      "id": "B9a-relaxed",
+      "criterion": "every bounded orbit lands on the symmetric set (user-accepted gate)",
+      "value": "24/24",
+      "pass": true,
+      "kind": "gate"
+    },
+    {
+      "id": "B9a-large",
+      "criterion": "every bounded orbit of the 480-IC sample lands on the symmetric set",
+      "value": "270/270 (bounded fraction 0.5625 +- 0.0226)",
+      "pass": true,
+      "kind": "gate"
+    },
+    {
+      "id": "B9b",
+      "criterion": "48/48 near-attractor ICs bounded and landed",
+      "value": "48/48",
+      "pass": true,
+      "kind": "gate"
+    },
+    {
+      "id": "B9c-1",
+      "criterion": "image launch: early equivariance <= 1e-8 (kappa, rho)",
+      "value": [
+        0.0,
+        2.631228568361621e-14
+      ],
+      "pass": true,
+      "kind": "gate"
+    },
+    {
+      "id": "B9c-2",
+      "criterion": "image launch: cross-cloud residuals <= 1.5 x floor",
+      "value": {
+        "max": 0.00522,
+        "limit": 0.00679
+      },
+      "pass": true,
+      "kind": "gate"
+    },
+    {
+      "id": "B9c-3",
+      "criterion": "image launch: fingerprint distances < 0.0549 (v1, reported only)",
+      "value": {
+        "x0|kappa_x0": 0.0302,
+        "x0|rho_x0": 0.0457,
+        "kappa_x0|rho_x0": 0.052
+      },
+      "pass": true,
+      "kind": "report"
+    },
+    {
+      "id": "B9d-1",
+      "criterion": "|P(z>0) - 0.5| <= 0.01",
+      "value": 0.49751,
+      "pass": true,
+      "kind": "gate"
+    },
+    {
+      "id": "B9d-2",
+      "criterion": "KS(z, -z) <= 0.02",
+      "value": 0.0075,
+      "pass": true,
+      "kind": "gate"
+    },
+    {
+      "id": "B9d-3",
+      "criterion": "counter-rotation: omega above/below opposite, within 5% of mean speed or 3 SE",
+      "value": {
+        "above": [
+          0.20391,
+          0.00439
+        ],
+        "below": [
+          -0.20484,
+          0.00382
+        ],
+        "mismatch_over_speed": 0.0045,
+        "mismatch_over_se": 0.16
+      },
+      "pass": true,
+      "kind": "gate"
+    },
+    {
+      "id": "B9d-3v1",
+      "criterion": "counter-rotation within 5% of mean speed (v1, strict)",
+      "value": 0.0045,
+      "pass": true,
+      "kind": "report"
+    },
+    {
+      "id": "B10a",
+      "criterion": "nearest catalog distance > 0.110 (interpretable)",
+      "value": 0.2119,
+      "pass": true,
+      "kind": "interpretation"
+    },
+    {
+      "id": "B10b",
+      "criterion": "nearest catalog distance > 0.115 (distinct)",
+      "value": 0.2119,
+      "pass": true,
+      "kind": "interpretation"
+    },
+    {
+      "id": "B10c",
+      "criterion": "distance to Aurelia > 0.110 before shape-novelty wording",
+      "value": 0.2899,
+      "pass": true,
+      "kind": "interpretation"
+    }
+  ],
+  "verdict": {
+    "all_gates_pass": true,
+    "failed_gates": [],
+    "failed_other": [
+      "B9a-strict"
+    ],
+    "basin_disclosure": "24/48 random ICs in [-2,2]^3 stay bounded and 24 land on the symmetric set; 24 escape to infinity (shared protocol, rng seed 0); 480-IC sample: bounded fraction 0.5625 +- 0.0226, 270/270 bounded orbits land on the symmetric set",
+    "certified": true,
+    "note": "gates of kind 'gate' decide certification; B9a-strict is the pre-registered 48/48 basin gate, replaced for this specimen by the user-accepted B9a-relaxed gate with the escape fraction disclosed; 'report', 'beauty' and 'interpretation' rows do not decide certification"
+  },
+  "runtime_s": 261.2
+}
