@@ -5,6 +5,12 @@ __pycache__/
 .venv/
 venv/
 
+# Tool caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
 # Exploration scratch space (not part of the published artifact)
 scratch/
 
@@ -17,6 +23,12 @@ paper/*.aux
 paper/*.log
 paper/*.bbl
 paper/*.blg
+paper/*.out
+paper/*.toc
+paper/*.fls
+paper/*.fdb_latexmk
+paper/*.synctex.gz
 
-# Rotation GIF fallbacks (heavy, regenerable via scripts/render_rotations.py; the web page uses the mp4/webm)
+# Rotation GIF fallbacks (heavy, regenerable via scripts/render_rotations.py). The
+# mp4/webm pair is the committed form of each orbit video; no page loads them yet.
 gallery/*_orbit.gif

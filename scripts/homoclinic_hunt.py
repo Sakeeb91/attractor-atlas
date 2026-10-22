@@ -17,9 +17,9 @@ unstable plane and return along the stable direction, so we:
 A parameter where D drops to ~0 is numerical evidence of a homoclinic
 (Shilnikov) bifurcation nearby. The saddle index nu = rho/|lambda_3| < 1
 (Shilnikov's inequality, in the time-reversed convention appropriate for a
-2-D unstable manifold) is recorded alongside; for all three systems it is
-parameter-independent along the swept direction because rho and lambda_3
-do not involve the rotation rate.
+2-D unstable manifold) is recorded alongside; for all three C_n specimens
+(Aurelia, Naiad, Cassiopea) it is parameter-independent along the swept
+direction because rho and lambda_3 do not involve the rotation rate.
 
 Outputs:
     results/homoclinic_hunt.json

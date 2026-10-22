@@ -1,8 +1,8 @@
 # The Attractor Atlas
 
-*Four novel strange attractors — **Aurelia** (C₃), **Naiad** (C₂), **Cassiopea** (C₄), and **Mobula** (S₄ rotoreflection) — discovered, certified, and named in June 2026, together with the quality-diversity engine that finds them. They are the first entries in a [periodic table of strange attractors ordered by symmetry](docs/SYMMETRY_PROGRAM.md); Aurelia, the moon jellyfish of the family, leads the tour.*
+*Five novel strange attractors, together with the quality-diversity engine that finds them: **Aurelia** (C₃), **Naiad** (C₂), **Cassiopea** (C₄) and **Mobula** (S₄ rotoreflection), discovered, certified and named in June 2026, and **Trinacria** (D₃, the chiral dihedral group), added in October 2026. They are the first entries in a [periodic table of strange attractors ordered by symmetry](docs/SYMMETRY_PROGRAM.md); Aurelia, the moon jellyfish of the family, leads the tour.*
 
-**[Explore all four live in your browser](https://sakeeb91.github.io/attractor-atlas/)**: a WebGL viewer with 400,000 orbit points, 3,000 particles riding the flow in real time, orbit controls, live parameter sliders, and a switcher between attractors.
+**[Explore the first four live in your browser](https://sakeeb91.github.io/attractor-atlas/)**: a WebGL viewer with 400,000 orbit points, 3,000 particles riding the flow in real time, orbit controls, live parameter sliders, and a switcher between attractors. Trinacria is not in the viewer yet.
 
 **[Read the story](STORY.md)**: a long-form narrative of the whole arc, from the failed first family through the 600-universe search and the certification of Aurelia, to the quality-diversity engine that found its siblings Naiad and Cassiopea, and on to Mobula — the first member whose symmetry is a rotation-plus-reflection.
 
@@ -68,7 +68,7 @@ One full orbit of the camera (`python scripts/render_animation.py`):
 ## Certification of chaos
 
 All numbers below are reproducible with `python scripts/verify_chaos.py`
-(recorded in [`results/verification.json`](results/verification.json)).
+(recorded in [`results/aurelia_verification.json`](results/aurelia_verification.json)).
 
 | Property | Value |
 |---|---|
@@ -358,6 +358,139 @@ a constant in `dz/dt`, Mobula's on-axis equilibria are the *symmetric* triple
 `z(ν − z²) = 0`, and the symmetry is visible in the fixed-point structure: σ
 exchanges the two off-axis-z equilibria and they carry identical eigenvalues.
 
+## Trinacria: the dihedral member
+
+Every earlier member turns about a single vertical axis. **Trinacria** adds
+half-turns about *horizontal* axes. Its symmetry group is the chiral dihedral
+group **D₃** (order 6): the 120° rotation `ρ: (w, z) → (e^(2πi/3)·w, z)` about
+the vertical axis, together with the half-turn `κ: (w, z) → (w̄, −z)`, that is
+`(x, y, z) → (x, −y, −z)`, about the x axis. The six elements are three
+rotations about z and three half-turns about horizontal axes at 0° and ±120°.
+All six are proper rotations (determinant +1), so the attractor has no mirror
+symmetry of any kind.
+
+The half-turn changes how the flow can spin. A constant rotation rate is not
+κ-equivariant, so the only admissible spin is odd in z: the term `iω·z·w` turns
+the upper half one way and the lower half the other, and κ swaps the two. On
+the attractor this shows as a **counter-rotating core**: within radius 0.6 of
+the axis (about 55% of the time) the upper half winds counterclockwise and the
+lower half clockwise at equal and opposite rates (mean angular velocity ±0.59
+for r < 0.1, ±0.47 for 0.1 < r < 0.3, ±0.29 for 0.3 < r < 0.6). Farther out
+each half turns weakly the other way, so the net angular momentum of each half
+is close to zero.
+
+*Trinacria* Heiberg 1863 is an extinct marine diatom genus (Paleocene to Eocene
+fossils from Denmark), named for the triskelion of Sicily: three legs turning
+one way, and turning the other way when the disc is flipped over. That reversal
+is what κ does to this flow, and a diatom frustule is itself two valves stacked
+top and bottom. Web searches for "Trinacria attractor" and for Trinacria as a
+chaotic or dynamical system found no prior use, both at selection time and again
+after certification (logged in [`results/d3_selection.json`](results/d3_selection.json)
+and [`docs/RELATED_WORK.md`](docs/RELATED_WORK.md)).
+
+![The Trinacria attractor](gallery/trinacria_hero.png)
+
+| The triskelion (top) | The profile (side) |
+|---|---|
+| ![Trinacria triskelion](gallery/trinacria_triskelion.png) | ![Trinacria profile](gallery/trinacria_profile.png) |
+
+```
+dx/dt = (α·z² − β)x − ω·z·y + γ(x² − y²) + 2δ·z·xy      α=1.4773, β=1.4668,
+dy/dt = (α·z² − β)y + ω·z·x − 2γ·xy + δ·z(x² − y²)       ω=0.7168, γ=0.8446,
+dz/dt = ν·z − z³ − λ·z(x² + y²) + ε(3x²y − y³)           δ=1.0567, ν=2.3978,
+                                                         λ=1.2975, ε=−1.5491
+```
+
+In complex form this is the n = 3 member of a new dihedral family
+([`atlas/family_d.py`](atlas/family_d.py)):
+
+```
+dw/dt = (α·z² − β + iω·z)·w + γ·w̄² + iδ·z·w̄²
+dz/dt = ν·z − z³ − λ·z|w|² + ε·Im(w³)
+```
+
+Three coefficient sets would enlarge the group, and none of them is zero here:
+`ω = δ = ε = 0` restores the z-flip and the vertical mirrors (D₃ₕ),
+`ω = γ = 0` restores the diagonal mirrors and the inversion (D₃d), and
+`γ = δ = ε = 0` restores rotation by every angle. Equivariance under all six
+elements, and violation of every larger group (C₂ₙ, z-flip, mirrors, inversion,
+S₂ₙ, and every copy of O and I that contains Dₙ), is unit-tested for the
+family at n = 2 to 6 ([`tests/test_d_equivariance.py`](tests/test_d_equivariance.py);
+the O and I copies at n = 2 to 5)
+and for the specimen package
+([`tests/test_trinacria_matches_family.py`](tests/test_trinacria_matches_family.py)).
+
+The specimen came from a fine-dt screen of 13 nominees of a random probe of the
+family box ([`scripts/search_d3.py`](scripts/search_d3.py),
+[`results/d3_selection.json`](results/d3_selection.json)). No nominee passed
+every pre-registered gate. Trinacria (nominee #8) passed all but the basin
+gate, and it was accepted under a relaxed basin gate, disclosed below. Its
+parameters are the 4-decimal probe values with no polishing; β = 1.4668 sits
+near the box face 1.5.
+
+Certified via `python scripts/verify_trinacria.py`
+([`results/trinacria_verification.json`](results/trinacria_verification.json)).
+The battery is stricter than Mobula's: it adds a dt-halving arm, a
+spectrum-versus-divergence check, a D₃-orbit test of the equilibria, stronger
+symmetry controls, and a single-attractor test.
+
+| Property | Value |
+|---|---|
+| Lyapunov spectrum | **λ₁ = +0.328 ± 0.002**, λ₂ = −0.0006, λ₃ = −1.492 (mean ± SE over 24 orbits, T = 2000 each, dt = 0.00125); a single orbit scatters by ±0.009, so quote **λ₁ = 0.33 ± 0.01** |
+| Kaplan–Yorke dimension | **D_KY ≈ 2.219** |
+| dt halving (same ICs, same T) | λ₁ = 0.332, 0.332, 0.332, 0.328 at dt = 0.01, 0.005, 0.0025, 0.00125; successive changes 0.2%, 0.2%, 1.3%; no monotone drift; spot check at dt = 0.000625: 0.335 |
+| Σλ versus mean divergence | −1.1649 versus −1.1639 (0.09% apart) |
+| λ₁ across 5 near-attractor ICs | 0.305 … 0.358 (spread 16%) |
+| Boundedness | 4M steps at dt = 0.004, max \|X\| = 1.573; mean divergence −1.164 |
+| Centring (64 orbits, 2.75 × 10⁵ time units) | centroid / extent = (0.0023, 0.0004, 0.0017); the x offset is 2.4 SE, inside the 3 SE gate |
+| Equilibria | 24, in six complete D₃-orbits of sizes 1, 2, 3, 6, 6, 6; spectra agree within each orbit to 2 × 10⁻¹³ |
+| Origin | a saddle with the double real eigenvalue −β = −1.467 and ν = 2.398 along z (not a saddle-focus, unlike the C_n specimens) |
+| On-axis pair (0, 0, ±1.548) | κ-conjugate saddle-foci, identical eigenvalues 2.075 ± 1.110i, −4.796, and **opposite rotation sense** (J_xy − J_yx = ±2.220) |
+| In-plane triple | saddle-foci at radius 1.737 exactly on the three half-turn axes, eigenvalues −2.958 ± 7.749i, 1.467 |
+| D₃ symmetry residual | all five non-identity elements 0.0044–0.0046, against a self floor of 0.0045 (ratio 1.006) |
+| Controls (not symmetries) | z-flip 0.070 (15×), y-mirror 0.070 (15×), C₆ 0.113 (25×), inversion 0.076 (17×), 37° rotation 0.083 (18×), 144 elements of O and I containing D₃ ≥ 18× |
+| Single attractor, not a κ-conjugate pair | 48/48 near-attractor ICs land on the same symmetric set; orbits launched from κx₀ and ρx₀ fill the same cloud (cross residuals 0.0047–0.0054, at the floor); P(z > 0) = 0.504 ± 0.002, pooled KS(z, −z) = 0.012 |
+| Counter-rotation (64-orbit ensemble) | mean angular velocity +0.202 ± 0.001 above the mid-plane, −0.207 ± 0.001 below |
+| **Basin (disclosed)** | **24/48** random ICs in [−2, 2]³ stay bounded (56 ± 2% of a 480-IC sample) and **every bounded orbit lands on the symmetric attractor**; the rest escape to infinity. Same protocol: Aurelia 48/48, Naiad 48/48, Cassiopea 43/48, Mobula 41/48 |
+| Novelty vs the dysts catalog | nearest Coullet at 0.212, but JerkCircuit (0.241) is within the 0.055 noise floor, so the nearest-neighbour identity is not stable; the shape is distinct (above the 0.115 median spacing) |
+| Distance to the other specimens | Cassiopea 0.217, Aurelia 0.290, Naiad 0.626, Mobula 0.644 |
+
+What the numbers do not say:
+
+- **Escape.** Trinacria has the smallest basin of the five. Half of a
+  [−2, 2]³ box escapes to infinity. The pre-registered gate (48/48 land) fails
+  and is recorded as failing. The specimen is certified under the relaxed gate
+  "every bounded orbit lands on the symmetric set" (270/270 in the large
+  sample), a choice made explicitly and recorded with its reasons in
+  [`results/d3_selection.json`](results/d3_selection.json) (`user_decision`).
+- **Slow mixing between the halves.** The orbit stays on one side of the
+  mid-plane for up to about 40 time units, so single-window averages
+  (centroid, P(z > 0), KS) scatter by more than their gates allow. Those gates
+  are taken on the 64-orbit ensemble with across-orbit errors. Two ensemble
+  statistics whose exact value is zero sit at 2.4 SE (x centroid) and 2.8 SE
+  (above/below angular-velocity mismatch, 2.4% of the mean speed); they are
+  reported as they are.
+- **Gates changed after seeing results**, each kept in the JSON with its
+  original verdict: the basin gate (above); the z-rotation scan control, whose
+  first version used the 5° rotation (2.9×, trivially close to the identity)
+  and now uses the angles a larger dihedral group would add; and the
+  image-launch fingerprint distance, which is reported but not gated because
+  the fingerprint ignores rotations.
+
+**Literature.** Dihedral symmetry in chaotic *maps* is classical (Field and
+Golubitsky, Chossat and Golubitsky, Reiter). For flows, Letellier and Gilmore
+(*J. Phys. A* 40, 5597, 2007) classify the symmetry groups available to 3-D
+systems and build equivariant flows by lifting an image system through a
+covering map; that construction can produce D₃-equivariant chaotic flows, and
+we could not read the full text from this environment. Nearby symmetric flows
+that we checked are not D₃: Thomas' cyclically symmetric system is S₆, three
+identical coupled cells act as C₃ᵥ or D₃d, and the Qi et al. (2008) four-wing
+system is C₂. So the claim is narrow: Trinacria is the first D₃ specimen of
+this atlas and, to our knowledge, the first designed and certified polynomial
+flow whose attractor carries exactly the chiral group D₃. It is not a claim that
+the group is new to chaotic flows. Details and the search log are in
+[`docs/RELATED_WORK.md`](docs/RELATED_WORK.md) (Part B, Claim 4).
+
 ## The polyhedral wall: an irreducibility obstruction
 
 The [symmetry program](docs/SYMMETRY_PROGRAM.md) set out to climb past the cyclic
@@ -406,6 +539,7 @@ headlined):
 | C₇ | reducible | 7 | 0.33 | — |
 | C₈ | reducible | 8 | 0.18 | — |
 | S₄ | reducible (improper) | 4 | 0.63 | Mobula (0.330) |
+| D₃ | reducible (chiral dihedral) | 6 | 0.69 | Trinacria (0.33) |
 | **T** | **irreducible** | 12 | **0.00** | — (obstruction) |
 | **O** | **irreducible** | 24 | **≈0**† | — (obstruction) |
 | **I** | **irreducible** | 60 | **≈0**† | — (obstruction) |
@@ -421,17 +555,34 @@ novelty, not maximal stretching). Two regimes are visible
 groups host chaos with a **non-monotonic** dependence on order, while the
 irreducible-action polyhedral groups fall off an **irreducibility cliff** to zero.
 The amount of chaos a symmetry permits depends less on *how much* symmetry there
-is than on *what kind*. (Null check, after Letellier–Gilmore: in a cover/image
+is than on *what kind*. The D₃ row, added with Trinacria, makes the same point
+within one order: C₆ and D₃ both have six elements, and their maxima are 0.27
+and 0.69. (The D₃ maximizer was checked to be centred and symmetric; it has one
+more parameter than the Cₙ family, so the caveats above apply.) (Null check, after Letellier–Gilmore: in a cover/image
 construction the cover's exponent is independent of the covering group; our
 families are independently searched, not covers of a shared image, so the
 group-dependence is a real property of the equivariant design space.)
+
+## Repository layout
+
+| Path | Contents |
+|---|---|
+| `atlas/` | The search families and the search engine: `family.py` ($C_n$), `family_s4.py` ($S_4$), `family_d.py` ($D_n$), `family_t.py`, `family_o.py`, `family_i.py` (polyhedral $T$, $O$, $I$); `fingerprint.py` (shape fingerprints and novelty distance); `map_elites.py` (the quality-diversity archive). |
+| `aurelia/`, `naiad/`, `cassiopea/`, `mobula/`, `trinacria/` | The five specimen packages, each with `dynamics.py`, `equilibria.py` and `lyapunov.py`; importable as a library (see below). |
+| `scripts/` | Flat entry points, grouped by prefix: `verify_*.py` (certification batteries; `verify_chaos.py` is Aurelia's), `render_*.py` (gallery images and videos), `search_*.py` and `run_atlas.py` (searches), the studies `convergence_study.py`, `homoclinic_hunt.py`, `basin_comparison.py`, `validate_fingerprint.py`, `bifurcation_scan.py` and `build_catalog_fingerprints.py`, and `symmetry_law.py` (the law). |
+| `results/` | One certification record per specimen (`results/*_verification.json`), the per-group law rows (`results/law/`), the atlas archive (`results/atlas/archive.json`), the catalog fingerprints, the D3 selection records and the study outputs. |
+| `gallery/` | Renders and the figures used by this README, STORY.md and the paper, plus orbit videos `gallery/<name>_orbit.{mp4,webm}` written by `scripts/render_rotations.py` (Aurelia, Naiad, Cassiopea and Mobula; no Trinacria video yet). The videos are committed but not yet linked from any page; the matching `.gif` fallback is regenerable and gitignored. |
+| `tests/` | Equivariance gates for the $S_4$, $D_n$, $T$, $O$ and $I$ families, and cross-checks of the Mobula and Trinacria packages against their families (`python -m pytest tests/`). |
+| `docs/` | The methods record, the symmetry program, related work and two historical plans; [docs/README.md](docs/README.md) is the index, with a status label per document. |
+| `paper/` | The paper draft (`main.tex`, `references.bib`). |
+| `index.html` | The live viewer, served by GitHub Pages from the repository root; its design contract is in `DESIGN.md` and `PRODUCT.md`. |
 
 ## Reproduce everything
 
 ```bash
 pip install -r requirements.txt
 
-python scripts/verify_chaos.py        # certify Aurelia, write results/verification.json
+python scripts/verify_chaos.py        # certify Aurelia, write results/aurelia_verification.json
 python scripts/render_gallery.py      # render the Aurelia gallery
 python scripts/bifurcation_scan.py    # sweep c, plot the route to chaos
 python scripts/search_parameters.py   # re-run the original discovery search
@@ -441,10 +592,15 @@ python scripts/verify_cassiopea.py    # certify Cassiopea
 python scripts/render_cassiopea.py    # render the Cassiopea gallery
 python scripts/verify_mobula.py       # certify Mobula (S4 rotoreflection)
 python scripts/render_mobula.py       # render the Mobula gallery
+python scripts/search_d3.py           # screen the 13 D3 nominees (~40 min)
+python scripts/verify_trinacria.py    # certify Trinacria (D3 dihedral, ~10 min)
+python scripts/render_trinacria.py    # render the Trinacria gallery
+python scripts/render_rotations.py    # orbit videos gallery/<name>_orbit.{mp4,webm} (+ gif fallback); needs ffmpeg
+python scripts/basin_comparison.py    # shared 48-IC basin test, all five specimens
 python scripts/convergence_study.py   # error-barred Lyapunov spectra
 python scripts/validate_fingerprint.py # validate the novelty metric, draw the shape map
 python scripts/homoclinic_hunt.py     # hunt Shilnikov homoclinic connections
-python scripts/symmetry_law.py all    # chaos-vs-symmetry law: C2..C8, S4, T, O, I + figure
+python scripts/symmetry_law.py all    # chaos-vs-symmetry law: C2..C8, S4, D3, T, O, I + figure
 python -m pytest tests/               # numerical equivariance + cross-check tests
 ```
 

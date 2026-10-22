@@ -11,6 +11,7 @@ escapees/artifacts dropped before the maximum is taken.
 Groups (and the family that realizes each):
   C2..C8  reducible action on R^3 (plane rotation + height): atlas/family.py
   S4      improper rotoreflection (order 4, Schoenflies):    atlas/family_s4.py
+  D3      chiral dihedral (order 6, half-turn kappa):        atlas/family_d.py (n=3)
   T,O,I   polyhedral ROTATION groups, IRREDUCIBLE on R^3:    atlas/family_{t,o,i}.py
 
 The headline finding: chaos strength is non-monotonic across the reducible-action
@@ -20,15 +21,21 @@ certified chaos -- the irreducibility obstruction (no commuting linear map but a
 scalar -> no linear engine). See docs/SYMMETRY_PROGRAM.md.
 
 Fairness caveat (stated honestly): the families have different parameter counts
-(Cn 7, S4 8, T/O/I 4), so the chaotic FRACTION is only loosely comparable across
+(Cn 7, S4 8, D3 8, T 5, O/I 4; read from each family's N_PARAMS), so the
+chaotic FRACTION is only loosely comparable across
 families. The robust comparable is max certified lambda1 under equal evaluation
 budget. Null hypothesis (Letellier-Gilmore): in a cover/image construction the
 cover's LLE is independent of the covering group; our families are independently
 searched, not covers of a shared image, so any group-dependence is a property of
 the equivariant design space, not a cover artifact.
 
+Reproducibility note: run_one seeds its generator from hash(label), and Python
+randomizes str hashes per process unless PYTHONHASHSEED is set, so a rerun draws a
+different sample of the same box. The D3 row (results/law/law_D3.json) was produced
+with PYTHONHASHSEED=0 OMP_NUM_THREADS=1; the earlier rows record no hash seed.
+
 Usage:
-  python scripts/symmetry_law.py <label>     # one group -> results/law_<label>.json
+  PYTHONHASHSEED=0 python scripts/symmetry_law.py <label>   # one group -> results/law/law_<label>.json
   python scripts/symmetry_law.py aggregate   # build results/symmetry_law.csv + figure
 """
 
@@ -45,6 +52,7 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 RESULTS = ROOT / "results"
+LAW_DIR = RESULTS / "law"  # one JSON row per group: law/law_<label>.json
 
 # Matched budget and evaluator settings (identical for every group).
 N_EVAL = 12_000
@@ -55,20 +63,38 @@ SEARCH_KW = dict(dt=SEARCH_DT, transient=16_000, lyap_steps=50_000,
 CERT_DT = 0.0025
 CHAOS_THRESH = 0.02  # lambda1 above this (and bounded) counts as chaotic
 
-# group label -> (order, n_params, kind, extra)
+# group label -> (order, kind, extra). The parameter count is not stored here:
+# n_params(label) reads N_PARAMS from the family module, so it cannot drift.
 GROUPS = {
-    "C2": (2, 7, "cn", 2), "C3": (3, 7, "cn", 3), "C4": (4, 7, "cn", 4),
-    "C5": (5, 7, "cn", 5), "C6": (6, 7, "cn", 6), "C7": (7, 7, "cn", 7),
-    "C8": (8, 7, "cn", 8),
-    "S4": (4, 8, "s4", None),
-    "T": (12, 4, "poly", "t"), "O": (24, 4, "poly", "o"), "I": (60, 4, "poly", "i"),
+    "C2": (2, "cn", 2), "C3": (3, "cn", 3), "C4": (4, "cn", 4),
+    "C5": (5, "cn", 5), "C6": (6, "cn", 6), "C7": (7, "cn", 7),
+    "C8": (8, "cn", 8),
+    "S4": (4, "s4", None),
+    "D3": (6, "dn", 3),
+    "T": (12, "poly", "t"), "O": (24, "poly", "o"), "I": (60, "poly", "i"),
 }
+
+_FAMILY_MODULE = {"cn": "family", "s4": "family_s4", "dn": "family_d"}
+_POLY_MODULE = {"t": "family_t", "o": "family_o", "i": "family_i"}
+
+
+def family_module(label):
+    """The atlas family module that realizes group `label`."""
+    import importlib
+    order, kind, extra = GROUPS[label]
+    name = _POLY_MODULE[extra] if kind == "poly" else _FAMILY_MODULE[kind]
+    return importlib.import_module(f"atlas.{name}")
+
+
+def n_params(label):
+    """Search-box dimension of group `label`, read from its family's N_PARAMS."""
+    return int(family_module(label).N_PARAMS)
 
 
 # ---------------------------------------------------------------- evaluators
 def search_group(label, rng):
     """Run the matched-budget batched search; return (batch_lle, params, chaotic_fraction)."""
-    order, npar, kind, extra = GROUPS[label]
+    order, kind, extra = GROUPS[label]
     if kind == "cn":
         from atlas import family
         P = rng.uniform(family.PARAM_LO, family.PARAM_HI, size=(N_EVAL, family.N_PARAMS))
@@ -77,6 +103,10 @@ def search_group(label, rng):
         from atlas import family_s4 as fam
         P = rng.uniform(fam.PARAM_LO, fam.PARAM_HI, size=(N_EVAL, fam.N_PARAMS))
         res = fam.evaluate_batch(P, seed=int(rng.integers(1 << 30)), **SEARCH_KW)
+    elif kind == "dn":
+        from atlas import family_d as fam
+        P = rng.uniform(fam.PARAM_LO, fam.PARAM_HI, size=(N_EVAL, fam.N_PARAMS))
+        res = fam.evaluate_batch(P, extra, seed=int(rng.integers(1 << 30)), **SEARCH_KW)
     else:
         fam = {"t": "family_t", "o": "family_o", "i": "family_i"}[extra]
         mod = __import__(f"atlas.{fam}", fromlist=["x"])
@@ -91,7 +121,7 @@ def search_group(label, rng):
 
 # real-coordinate single-state velocity adapters (for certification)
 def velocity_real(label):
-    order, npar, kind, extra = GROUPS[label]
+    order, kind, extra = GROUPS[label]
     if kind == "cn":
         n = extra
 
@@ -109,6 +139,15 @@ def velocity_real(label):
         def f(s, p):
             x, y, z = s
             dw, dz = v(x + 1j * y, z, p)
+            return np.array([dw.real, dw.imag, float(np.real(dz))])
+        return f
+    if kind == "dn":
+        from atlas.family_d import velocity as v
+        n = extra
+
+        def f(s, p):
+            x, y, z = s
+            dw, dz = v(x + 1j * y, z, p, n)
             return np.array([dw.real, dw.imag, float(np.real(dz))])
         return f
     fam = {"t": "family_t", "o": "family_o", "i": "family_i"}[extra]
@@ -176,7 +215,7 @@ def run_one(label):
     t0 = time.time()
     rng = np.random.default_rng(abs(hash(label)) % (1 << 31))
     lle, P, frac = search_group(label, rng)
-    order, npar, kind, extra = GROUPS[label]
+    order, kind, extra = GROUPS[label]
     f = velocity_real(label)
     # top-K by batch lle, certify with the long integrator
     finite = np.where(np.isfinite(lle), lle, -1e9)
@@ -190,7 +229,7 @@ def run_one(label):
             certified.append((l, P[i].tolist()))
     certified.sort(key=lambda t: -t[0])
     out = {
-        "group": label, "order": order, "n_params": npar, "n_eval": N_EVAL,
+        "group": label, "order": order, "n_params": n_params(label), "n_eval": N_EVAL,
         "chaotic_fraction_batch": round(frac, 5),
         "n_certified_of_topK": len(certified),
         "max_lambda1_certified": round(certified[0][0], 5) if certified else 0.0,
@@ -204,7 +243,8 @@ def run_one(label):
     else:
         out["spectrum_at_max"] = None
         out["D_KY_at_max"] = None
-    (RESULTS / f"law_{label}.json").write_text(json.dumps(out, indent=2) + "\n")
+    LAW_DIR.mkdir(parents=True, exist_ok=True)
+    (LAW_DIR / f"law_{label}.json").write_text(json.dumps(out, indent=2) + "\n")
     print(f"{label}: maxλ1={out['max_lambda1_certified']} D_KY={out['D_KY_at_max']} "
           f"frac={frac:.4f} certK={len(certified)} ({out['seconds']}s)")
     return out
@@ -217,7 +257,7 @@ def aggregate():
 
     rows = []
     for label in GROUPS:
-        p = RESULTS / f"law_{label}.json"
+        p = LAW_DIR / f"law_{label}.json"
         if p.exists():
             rows.append(json.loads(p.read_text()))
     rows.sort(key=lambda r: (r["order"], r["group"]))
@@ -238,8 +278,9 @@ def aggregate():
     lam = [r["max_lambda1_certified"] for r in rows]
     orders = [r["order"] for r in rows]
     kinds = ["poly" if r["group"] in ("T", "O", "I") else
-             ("s4" if r["group"] == "S4" else "cn") for r in rows]
-    colors = {"cn": "#1f77b4", "s4": "#9467bd", "poly": "#d62728"}
+             ("s4" if r["group"] == "S4" else
+              ("dn" if r["group"].startswith("D") else "cn")) for r in rows]
+    colors = {"cn": "#1f77b4", "s4": "#9467bd", "dn": "#e07b39", "poly": "#d62728"}
     x = np.arange(len(rows))
     bars = ax.bar(x, lam, color=[colors[k] for k in kinds], edgecolor="black", linewidth=0.6)
     for xi, r in zip(x, rows):
@@ -248,11 +289,13 @@ def aggregate():
     ax.set_xticks(x); ax.set_xticklabels(labels)
     ax.set_ylabel(r"max certified $\lambda_1$  (equal eval budget)")
     ax.set_title("Chaos strength vs symmetry group\n"
-                 "blue = $C_n$ (reducible) · purple = $S_4$ rotoreflection · red = polyhedral (irreducible)")
+                 "blue = $C_n$ · purple = $S_4$ rotoreflection · orange = $D_3$ dihedral (all reducible)"
+                 " · red = polyhedral (irreducible)")
     ax.axhline(0, color="black", lw=0.8)
     from matplotlib.patches import Patch
     ax.legend(handles=[Patch(color=colors["cn"], label=r"$C_n$ rotation (reducible)"),
                        Patch(color=colors["s4"], label=r"$S_4$ rotoreflection"),
+                       Patch(color=colors["dn"], label=r"$D_3$ dihedral (chiral)"),
                        Patch(color=colors["poly"], label="polyhedral T/O/I (irreducible)")],
               loc="upper right")
     ax.grid(axis="y", alpha=0.3)

@@ -7,7 +7,7 @@ Computes and records everything needed to certify a strange attractor:
   * time-averaged divergence (dissipativity)
   * sensitivity to the largest-exponent estimate across initial conditions
 
-Writes results/verification.json and prints a summary.
+Writes results/aurelia_verification.json and prints a summary.
 """
 
 from __future__ import annotations
@@ -70,7 +70,7 @@ def main():
     print(f"  bounded={bounded}  extent=[{np.round(pts.min(0),3)}, {np.round(pts.max(0),3)}]")
     print(f"  time-averaged divergence = {mean_div:.4f} (negative => dissipative)")
 
-    out = pathlib.Path(__file__).resolve().parents[1] / "results" / "verification.json"
+    out = pathlib.Path(__file__).resolve().parents[1] / "results" / "aurelia_verification.json"
     out.parent.mkdir(exist_ok=True)
     out.write_text(json.dumps(results, indent=2) + "\n")
     print(f"\nwrote {out}")

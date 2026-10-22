@@ -184,3 +184,22 @@ top-K of each with the long integrator, and records the maximum certified lambda
 *irreducible-action* polyhedral groups (T, O, I) sit at ~zero certified chaos -- the irreducibility
 cliff. The robust comparable is max certified lambda1 under equal evaluation budget (the chaotic
 *fraction* is only loosely comparable across families with different parameter counts).
+
+## Outcome added October 2026: the dihedral family and Trinacria
+
+**D_n family: built.** The dihedral family anticipated in Phase 3 exists as
+`atlas/family_d.py`. The extra generator is the half-turn kappa:(w, z) -> (conj(w), -z),
+not the planar mirror w -> conj(w) suggested above: the mirror has determinant -1, and the
+half-turn keeps the group chiral. kappa forbids a uniform spin, so the rotation rate is odd in
+z. `tests/test_d_equivariance.py` proves equivariance for n = 2 to 6 and excludes every larger
+group (C_2n, z-flip, mirrors, S_2n, inversion, and the copies of O and I containing D_n).
+
+**Trinacria (D3): certified, with a disclosed basin.** lambda1 = 0.33 +- 0.01 (ensemble mean
+0.328 +- 0.002 at dt 0.00125, converged under dt halving), D_KY 2.219, group residuals at the
+self floor and controls at least 15 times worse, a single symmetric attractor rather than a
+kappa-conjugate pair. About half of [-2,2]^3 escapes to infinity; every bounded orbit lands on
+the attractor. See the README section and `results/trinacria_verification.json`.
+
+**Law: D3 row added.** At the matched budget D3 reaches a maximum certified lambda1 of 0.689
+(D_KY 2.49), the largest of any group so far, against 0.272 for C6, the cyclic group of the
+same order (`results/law/law_D3.json`, run with PYTHONHASHSEED=0).

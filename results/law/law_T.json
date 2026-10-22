@@ -1,7 +1,7 @@
 {
   "group": "T",
   "order": 12,
-  "n_params": 4,
+  "n_params": 5,
   "n_eval": 12000,
   "chaotic_fraction_batch": 0.00142,
   "n_certified_of_topK": 0,

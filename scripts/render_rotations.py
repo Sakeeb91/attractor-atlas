@@ -1,10 +1,18 @@
-"""Render compact, looping rotation GIFs of the four certified attractors.
+"""Render compact, looping rotation videos of four of the five certified attractors.
 
-One full orbit per attractor, encoded with ffmpeg's palettegen/paletteuse for a
-small, high-quality GIF (the PillowWriter route produced ~6 MB files; this gets
-the same motion in a fraction of the size). Outputs gallery/<name>_orbit.gif.
+One full orbit per attractor (Aurelia, Naiad, Cassiopea, Mobula; the names in
+SPECS), encoded with ffmpeg. Three outputs per attractor:
 
-Usage: python scripts/render_rotations.py [names...]   (default: all four)
+    gallery/<name>_orbit.mp4    h264, committed
+    gallery/<name>_orbit.webm   vp9, committed
+    gallery/<name>_orbit.gif    palettegen/paletteuse fallback, gitignored
+                                (regenerable; the PillowWriter route produced
+                                ~6 MB files, this one is a fraction of that)
+
+Trinacria (the fifth specimen, D3) has no orbit video yet: it is not in SPECS.
+Adding one is separate content work for that specimen.
+
+Usage: python scripts/render_rotations.py [names...]   (default: every name in SPECS)
 """
 
 from __future__ import annotations

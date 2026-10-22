@@ -45,9 +45,9 @@ setting a = b = 0 restores the full octahedral symmetry (the load-bearing test).
 THE IRREDUCIBILITY OBSTRUCTION (the central finding of the polyhedral phase).
 Because T acts irreducibly on R^3, the only T-commuting linear map is rho*I:
 there is no saddle-focus linear engine. An exhaustive search of this family
-(degree-3 here, plus degree-4/5 equivariants and non-gradient rotational terms in
-scripts/polyhedral_obstruction.py; random and fixed-point-stability-targeted;
-~10^5 evaluations) finds NO dt-robust strange attractor: bounded orbits relax to
+(degree-3 here, plus degree-4/5 equivariants and non-gradient rotational terms;
+random and fixed-point-stability-targeted; ~10^5 evaluations) finds NO dt-robust
+strange attractor: bounded orbits relax to
 equilibria or limit cycles. Trigonometric "labyrinth" T-equivariant flows
 (Thomas-style) yield at most weak (lambda1 ~ 0.04), spatially localized chaos
 that breaks the symmetry (a single labyrinth cell, not a T-invariant set). This
@@ -57,6 +57,13 @@ flows under an *irreducible* polyhedral action resist chaos, in contrast to the
 chaos readily via their saddle-focus engine. It is a candidate explanation for
 the absence of any polyhedral chaotic FLOW in the literature (Phase 0). See
 docs/SYMMETRY_PROGRAM.md and the chaos-vs-symmetry-group law (Phase 3).
+
+Where the evidence lives: docs/METHODOLOGY.md section 10 (10.2 polynomial
+campaigns, 10.3 stability-targeted scan, 10.4 labyrinth route) records the
+campaigns and their outcomes, and the T/O/I rows of scripts/symmetry_law.py
+(results/symmetry_law.csv) are the committed, reproducible matched-budget runs.
+The higher-degree (degree-4/5) and non-gradient campaigns were scratch runs and
+their scripts were not committed; only this degree-3 family is in the tree.
 
 CAUTION for any further search: the batched two-orbit estimate at coarse dt is
 optimistic *to the point of fabricating chaos around stable equilibria* (a
@@ -86,7 +93,7 @@ SIGMA2 = np.array([[1.0, 0.0, 0.0], [0.0, -1.0, 0.0], [0.0, 0.0, -1.0]])  # (x,y
 
 
 def param_names():
-    """Names of the four parameters, in the order PARAM_LO/PARAM_HI use."""
+    """Names of the five parameters, in the order PARAM_LO/PARAM_HI use."""
     return list(_PARAM_NAMES)
 
 

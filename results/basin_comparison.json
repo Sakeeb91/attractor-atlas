@@ -1,0 +1,115 @@
+{
+  "protocol": "Shared basin protocol applied to all five specimens.\n\nProtocol (the one quoted in results/trinacria_verification.json):\n  ICs uniform in [-2, 2]^3, rng seed 0 (48 ICs) and rng seed 1 (480 ICs),\n  classical RK4 at dt = 0.005 on each package's own velocity (vectorized\n  over ICs), escape when a coordinate is non-finite or |X|_inf > 50\n  (checked every 10 steps). Bounded counts are taken at T = 120 and T = 300.\n  A bounded orbit LANDS on the specimen's attractor when its cloud over\n  T in (200, 300] (every 10th step) has extent-normalized NN-RMS distance\n  rho_id <= 0.02 to the reference cloud trajectory()[::8] of that package.",
+  "dt": 0.005,
+  "escape": 50.0,
+  "T_bound": 120.0,
+  "T_total": 300.0,
+  "landing_window": [
+    200.0,
+    300.0
+  ],
+  "landing_threshold": 0.02,
+  "specimens": {
+    "aurelia": {
+      "seed0_48": {
+        "n_ic": 48,
+        "n_bounded_T120": 48,
+        "n_bounded_T300": 48,
+        "n_landed": 48,
+        "bounded_fraction": 1.0,
+        "bounded_fraction_binomial_se": 0.0,
+        "max_rho_id_of_bounded": 0.00975
+      },
+      "seed1_480": {
+        "n_ic": 480,
+        "n_bounded_T120": 480,
+        "n_bounded_T300": 480,
+        "n_landed": 480,
+        "bounded_fraction": 1.0,
+        "bounded_fraction_binomial_se": 0.0,
+        "max_rho_id_of_bounded": 0.01038
+      }
+    },
+    "naiad": {
+      "seed0_48": {
+        "n_ic": 48,
+        "n_bounded_T120": 48,
+        "n_bounded_T300": 48,
+        "n_landed": 48,
+        "bounded_fraction": 1.0,
+        "bounded_fraction_binomial_se": 0.0,
+        "max_rho_id_of_bounded": 0.00833
+      },
+      "seed1_480": {
+        "n_ic": 480,
+        "n_bounded_T120": 480,
+        "n_bounded_T300": 480,
+        "n_landed": 480,
+        "bounded_fraction": 1.0,
+        "bounded_fraction_binomial_se": 0.0,
+        "max_rho_id_of_bounded": 0.01179
+      }
+    },
+    "cassiopea": {
+      "seed0_48": {
+        "n_ic": 48,
+        "n_bounded_T120": 43,
+        "n_bounded_T300": 43,
+        "n_landed": 43,
+        "bounded_fraction": 0.8958,
+        "bounded_fraction_binomial_se": 0.0441,
+        "max_rho_id_of_bounded": 0.00653
+      },
+      "seed1_480": {
+        "n_ic": 480,
+        "n_bounded_T120": 432,
+        "n_bounded_T300": 432,
+        "n_landed": 432,
+        "bounded_fraction": 0.9,
+        "bounded_fraction_binomial_se": 0.0137,
+        "max_rho_id_of_bounded": 0.0078
+      }
+    },
+    "mobula": {
+      "seed0_48": {
+        "n_ic": 48,
+        "n_bounded_T120": 41,
+        "n_bounded_T300": 41,
+        "n_landed": 41,
+        "bounded_fraction": 0.8542,
+        "bounded_fraction_binomial_se": 0.0509,
+        "max_rho_id_of_bounded": 0.00802
+      },
+      "seed1_480": {
+        "n_ic": 480,
+        "n_bounded_T120": 409,
+        "n_bounded_T300": 409,
+        "n_landed": 409,
+        "bounded_fraction": 0.8521,
+        "bounded_fraction_binomial_se": 0.0162,
+        "max_rho_id_of_bounded": 0.01397
+      }
+    },
+    "trinacria": {
+      "seed0_48": {
+        "n_ic": 48,
+        "n_bounded_T120": 24,
+        "n_bounded_T300": 24,
+        "n_landed": 24,
+        "bounded_fraction": 0.5,
+        "bounded_fraction_binomial_se": 0.0722,
+        "max_rho_id_of_bounded": 0.00784
+      },
+      "seed1_480": {
+        "n_ic": 480,
+        "n_bounded_T120": 270,
+        "n_bounded_T300": 270,
+        "n_landed": 270,
+        "bounded_fraction": 0.5625,
+        "bounded_fraction_binomial_se": 0.0226,
+        "max_rho_id_of_bounded": 0.01005
+      }
+    }
+  },
+  "runtime_s": 202.9
+}
