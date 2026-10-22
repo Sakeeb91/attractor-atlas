@@ -202,4 +202,4 @@ the attractor. See the README section and `results/trinacria_verification.json`.
 
 **Law: D3 row added.** At the matched budget D3 reaches a maximum certified lambda1 of 0.689
 (D_KY 2.49), the largest of any group so far, against 0.272 for C6, the cyclic group of the
-same order (`results/law_D3.json`, run with PYTHONHASHSEED=0).
+same order (`results/law/law_D3.json`, run with PYTHONHASHSEED=0).

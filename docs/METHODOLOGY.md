@@ -939,7 +939,7 @@ cliff) is a property of the equivariant design space itself, not a cover artifac
 | T family + equivariance gate + obstruction note | `atlas/family_t.py`, `tests/test_t_equivariance.py` | pytest; docstring |
 | O family + gate | `atlas/family_o.py`, `tests/test_o_equivariance.py` | pytest |
 | I family (60 matrices, $I_6$) + gate | `atlas/family_i.py`, `tests/test_i_equivariance.py` | pytest |
-| the law (protocol, certification, figure; D3 row with `PYTHONHASHSEED=0`) | `scripts/symmetry_law.py` | `results/law_*.json`, `results/symmetry_law.csv`, `gallery/symmetry_law.png` |
+| the law (protocol, certification, figure; D3 row with `PYTHONHASHSEED=0`) | `scripts/symmetry_law.py` | `results/law/law_*.json`, `results/symmetry_law.csv`, `gallery/symmetry_law.png` |
 | renders / rotations | `scripts/render_*.py`, `scripts/render_rotations.py` | `gallery/` |
 | literature verdicts | — | `docs/RELATED_WORK.md` |
 

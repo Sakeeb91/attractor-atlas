@@ -31,11 +31,11 @@ the equivariant design space, not a cover artifact.
 
 Reproducibility note: run_one seeds its generator from hash(label), and Python
 randomizes str hashes per process unless PYTHONHASHSEED is set, so a rerun draws a
-different sample of the same box. The D3 row (results/law_D3.json) was produced
+different sample of the same box. The D3 row (results/law/law_D3.json) was produced
 with PYTHONHASHSEED=0 OMP_NUM_THREADS=1; the earlier rows record no hash seed.
 
 Usage:
-  PYTHONHASHSEED=0 python scripts/symmetry_law.py <label>   # one group -> results/law_<label>.json
+  PYTHONHASHSEED=0 python scripts/symmetry_law.py <label>   # one group -> results/law/law_<label>.json
   python scripts/symmetry_law.py aggregate   # build results/symmetry_law.csv + figure
 """
 
@@ -52,6 +52,7 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 RESULTS = ROOT / "results"
+LAW_DIR = RESULTS / "law"  # one JSON row per group: law/law_<label>.json
 
 # Matched budget and evaluator settings (identical for every group).
 N_EVAL = 12_000
@@ -242,7 +243,8 @@ def run_one(label):
     else:
         out["spectrum_at_max"] = None
         out["D_KY_at_max"] = None
-    (RESULTS / f"law_{label}.json").write_text(json.dumps(out, indent=2) + "\n")
+    LAW_DIR.mkdir(parents=True, exist_ok=True)
+    (LAW_DIR / f"law_{label}.json").write_text(json.dumps(out, indent=2) + "\n")
     print(f"{label}: maxλ1={out['max_lambda1_certified']} D_KY={out['D_KY_at_max']} "
           f"frac={frac:.4f} certK={len(certified)} ({out['seconds']}s)")
     return out
@@ -255,7 +257,7 @@ def aggregate():
 
     rows = []
     for label in GROUPS:
-        p = RESULTS / f"law_{label}.json"
+        p = LAW_DIR / f"law_{label}.json"
         if p.exists():
             rows.append(json.loads(p.read_text()))
     rows.sort(key=lambda r: (r["order"], r["group"]))
