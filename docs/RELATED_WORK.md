@@ -607,6 +607,11 @@ dynamical-systems use found (2026-10-21, repeating the selection-stage search re
 results/d3_selection.json). Trinacria Heiberg 1863 is an extinct marine diatom genus
 (Hemiaulaceae) with Paleocene-Eocene fossils from Denmark.
 
+Repeated at naming time, after the battery passed (2026-10-22): WebSearch for
+"Trinacria attractor" returned only the Sicilian emblem, the dragonfly Orthetrum trinacria
+and generic attractor pages; "Trinacria" with chaotic system, dynamical system and attractor
+returned only unrelated chaotic-flow papers. No dynamical-systems use of the name.
+
 ### Search log (Claim 4)
 
 WebSearch, 2026-10-21 (WebFetch fails on DNS here, so verdicts rest on snippets and on our
