@@ -1,4 +1,4 @@
-"""Lyapunov convergence study with error bars for the three certified systems.
+"""Lyapunov convergence study with error bars for the three C_n specimens (Aurelia, Naiad, Cassiopea).
 
 For each of Aurelia, Naiad, and Cassiopea this computes the full Lyapunov
 spectrum (Benettin tangent-flow + QR) on a grid:

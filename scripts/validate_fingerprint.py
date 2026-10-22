@@ -58,7 +58,7 @@ def load_catalog():
 
 
 def our_fingerprints(n_replicas=1, rng=None):
-    """Fingerprint the three systems from fresh package trajectories."""
+    """Fingerprint the three C_n specimens (Aurelia, Naiad, Cassiopea) from fresh package trajectories."""
     from aurelia.dynamics import trajectory as traj_a
     from cassiopea.dynamics import trajectory as traj_c
     from naiad.dynamics import trajectory as traj_n
@@ -277,7 +277,7 @@ def main():
                   f"vs nearest {v['nearest_catalog']} {v['nearest_distance']:.3f} "
                   f"-> SNR {v['snr_nearest']}")
 
-    print("\n(c) our three systems vs the catalog + MDS map...")
+    print("\n(c) our three C_n specimens (Aurelia, Naiad, Cassiopea) vs the catalog + MDS map...")
     ours = our_fingerprints(n_replicas=3, rng=np.random.default_rng(3))
     res_ours = {}
     for k, reps in ours.items():
