@@ -21,7 +21,8 @@ certified chaos -- the irreducibility obstruction (no commuting linear map but a
 scalar -> no linear engine). See docs/SYMMETRY_PROGRAM.md.
 
 Fairness caveat (stated honestly): the families have different parameter counts
-(Cn 7, S4 8, T/O/I 4), so the chaotic FRACTION is only loosely comparable across
+(Cn 7, S4 8, D3 8, T 5, O/I 4; read from each family's N_PARAMS), so the
+chaotic FRACTION is only loosely comparable across
 families. The robust comparable is max certified lambda1 under equal evaluation
 budget. Null hypothesis (Letellier-Gilmore): in a cover/image construction the
 cover's LLE is independent of the covering group; our families are independently
@@ -61,21 +62,38 @@ SEARCH_KW = dict(dt=SEARCH_DT, transient=16_000, lyap_steps=50_000,
 CERT_DT = 0.0025
 CHAOS_THRESH = 0.02  # lambda1 above this (and bounded) counts as chaotic
 
-# group label -> (order, n_params, kind, extra)
+# group label -> (order, kind, extra). The parameter count is not stored here:
+# n_params(label) reads N_PARAMS from the family module, so it cannot drift.
 GROUPS = {
-    "C2": (2, 7, "cn", 2), "C3": (3, 7, "cn", 3), "C4": (4, 7, "cn", 4),
-    "C5": (5, 7, "cn", 5), "C6": (6, 7, "cn", 6), "C7": (7, 7, "cn", 7),
-    "C8": (8, 7, "cn", 8),
-    "S4": (4, 8, "s4", None),
-    "D3": (6, 8, "dn", 3),
-    "T": (12, 4, "poly", "t"), "O": (24, 4, "poly", "o"), "I": (60, 4, "poly", "i"),
+    "C2": (2, "cn", 2), "C3": (3, "cn", 3), "C4": (4, "cn", 4),
+    "C5": (5, "cn", 5), "C6": (6, "cn", 6), "C7": (7, "cn", 7),
+    "C8": (8, "cn", 8),
+    "S4": (4, "s4", None),
+    "D3": (6, "dn", 3),
+    "T": (12, "poly", "t"), "O": (24, "poly", "o"), "I": (60, "poly", "i"),
 }
+
+_FAMILY_MODULE = {"cn": "family", "s4": "family_s4", "dn": "family_d"}
+_POLY_MODULE = {"t": "family_t", "o": "family_o", "i": "family_i"}
+
+
+def family_module(label):
+    """The atlas family module that realizes group `label`."""
+    import importlib
+    order, kind, extra = GROUPS[label]
+    name = _POLY_MODULE[extra] if kind == "poly" else _FAMILY_MODULE[kind]
+    return importlib.import_module(f"atlas.{name}")
+
+
+def n_params(label):
+    """Search-box dimension of group `label`, read from its family's N_PARAMS."""
+    return int(family_module(label).N_PARAMS)
 
 
 # ---------------------------------------------------------------- evaluators
 def search_group(label, rng):
     """Run the matched-budget batched search; return (batch_lle, params, chaotic_fraction)."""
-    order, npar, kind, extra = GROUPS[label]
+    order, kind, extra = GROUPS[label]
     if kind == "cn":
         from atlas import family
         P = rng.uniform(family.PARAM_LO, family.PARAM_HI, size=(N_EVAL, family.N_PARAMS))
@@ -102,7 +120,7 @@ def search_group(label, rng):
 
 # real-coordinate single-state velocity adapters (for certification)
 def velocity_real(label):
-    order, npar, kind, extra = GROUPS[label]
+    order, kind, extra = GROUPS[label]
     if kind == "cn":
         n = extra
 
@@ -196,7 +214,7 @@ def run_one(label):
     t0 = time.time()
     rng = np.random.default_rng(abs(hash(label)) % (1 << 31))
     lle, P, frac = search_group(label, rng)
-    order, npar, kind, extra = GROUPS[label]
+    order, kind, extra = GROUPS[label]
     f = velocity_real(label)
     # top-K by batch lle, certify with the long integrator
     finite = np.where(np.isfinite(lle), lle, -1e9)
@@ -210,7 +228,7 @@ def run_one(label):
             certified.append((l, P[i].tolist()))
     certified.sort(key=lambda t: -t[0])
     out = {
-        "group": label, "order": order, "n_params": npar, "n_eval": N_EVAL,
+        "group": label, "order": order, "n_params": n_params(label), "n_eval": N_EVAL,
         "chaotic_fraction_batch": round(frac, 5),
         "n_certified_of_topK": len(certified),
         "max_lambda1_certified": round(certified[0][0], 5) if certified else 0.0,

@@ -883,7 +883,7 @@ selected for its symmetry evidence and look, not for maximal stretching.
 
 ### 11.3 Fairness caveats (stated, not buried)
 
-The families have different parameter counts ($C_n$: 7, $S_4$ and $D_3$: 8, $T/O/I$: 4) and
+The families have different parameter counts ($C_n$: 7, $S_4$ and $D_3$: 8, $T$: 5, $O/I$: 4) and
 different nonlinearity degrees, so the *chaotic fraction* is only loosely comparable
 across families; the robust comparable is **max certified $\lambda_1$ under equal
 evaluation budget**. The decline within $C_n$ at high $n$ partly reflects the fixed box
