@@ -563,6 +563,20 @@ construction the cover's exponent is independent of the covering group; our
 families are independently searched, not covers of a shared image, so the
 group-dependence is a real property of the equivariant design space.)
 
+## Repository layout
+
+| Path | Contents |
+|---|---|
+| `atlas/` | The search families and the search engine: `family.py` ($C_n$), `family_s4.py` ($S_4$), `family_d.py` ($D_n$), `family_t.py`, `family_o.py`, `family_i.py` (polyhedral $T$, $O$, $I$); `fingerprint.py` (shape fingerprints and novelty distance); `map_elites.py` (the quality-diversity archive). |
+| `aurelia/`, `naiad/`, `cassiopea/`, `mobula/`, `trinacria/` | The five specimen packages, each with `dynamics.py`, `equilibria.py` and `lyapunov.py`; importable as a library (see below). |
+| `scripts/` | Flat entry points, grouped by prefix: `verify_*.py` (certification batteries; `verify_chaos.py` is Aurelia's), `render_*.py` (gallery images and videos), `search_*.py` and `run_atlas.py` (searches), the studies `convergence_study.py`, `homoclinic_hunt.py`, `basin_comparison.py`, `validate_fingerprint.py`, `bifurcation_scan.py` and `build_catalog_fingerprints.py`, and `symmetry_law.py` (the law). |
+| `results/` | One certification record per specimen (`results/*_verification.json`), the per-group law rows (`results/law/`), the atlas archive (`results/atlas/archive.json`), the catalog fingerprints, the D3 selection records and the study outputs. |
+| `gallery/` | Renders and the figures used by this README, STORY.md and the paper, plus orbit videos `gallery/<name>_orbit.{mp4,webm}` written by `scripts/render_rotations.py` (Aurelia, Naiad, Cassiopea and Mobula; no Trinacria video yet). The videos are committed but not yet linked from any page; the matching `.gif` fallback is regenerable and gitignored. |
+| `tests/` | Equivariance gates for the $S_4$, $D_n$, $T$, $O$ and $I$ families, and cross-checks of the Mobula and Trinacria packages against their families (`python -m pytest tests/`). |
+| `docs/` | The methods record, the symmetry program, related work and two historical plans; [docs/README.md](docs/README.md) is the index, with a status label per document. |
+| `paper/` | The paper draft (`main.tex`, `references.bib`). |
+| `index.html` | The live viewer, served by GitHub Pages from the repository root; its design contract is in `DESIGN.md` and `PRODUCT.md`. |
+
 ## Reproduce everything
 
 ```bash
@@ -581,6 +595,7 @@ python scripts/render_mobula.py       # render the Mobula gallery
 python scripts/search_d3.py           # screen the 13 D3 nominees (~40 min)
 python scripts/verify_trinacria.py    # certify Trinacria (D3 dihedral, ~10 min)
 python scripts/render_trinacria.py    # render the Trinacria gallery
+python scripts/render_rotations.py    # orbit videos gallery/<name>_orbit.{mp4,webm} (+ gif fallback); needs ffmpeg
 python scripts/basin_comparison.py    # shared 48-IC basin test, all five specimens
 python scripts/convergence_study.py   # error-barred Lyapunov spectra
 python scripts/validate_fingerprint.py # validate the novelty metric, draw the shape map
