@@ -9,6 +9,8 @@
 > novelty claims survived. Phase 1 is done — **Mobula (S₄ rotoreflection)** is certified,
 > named, rendered, and in the viewer. The gap list below (Lyapunov rigor, fingerprint
 > validation, Shilnikov hunt) is still valid supporting work for the eventual paper.
+> In October 2026 a fifth specimen, **Trinacria (chiral dihedral D3)**, was certified and
+> added to the README, the methodology and the law table; it is not yet in the viewer.
 
 Work in this repository (github.com/Sakeeb91/attractor-atlas, live viewer
 sakeeb91.github.io/attractor-atlas). Read README.md and STORY.md first. Conventions: one logical

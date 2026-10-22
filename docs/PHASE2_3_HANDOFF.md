@@ -1,5 +1,20 @@
 # Hand-off: Symmetry Program Phases 2 & 3
 
+> **Status (2026-10-22): historical, except sections 1 and 2.** Phases 2 and 3 were executed
+> in June 2026, and the D3 law row and the Trinacria specimen (chiral dihedral D3) were added
+> in October 2026. Read this file as follows:
+> - **Section 0 is obsolete.** The branch divergence it describes was resolved by the merge
+>   in commit `bad965d`; the `symmetry-program` branch and the separate paper worktree path no
+>   longer need any action.
+> - **Sections 1 and 2 are still the living workflow conventions.** New specimen work should
+>   mirror them (equivariance test first, atomic commits, certify before naming, view every
+>   render, the per-specimen file layout).
+> - **Sections 3 and 4 are superseded** by [docs/METHODOLOGY.md](METHODOLOGY.md) sections 10
+>   (the polyhedral irreducibility obstruction: no certified T/O/I specimen exists) and 11 (the
+>   chaos-vs-symmetry-group law), and by the "Outcomes" section of
+>   [docs/SYMMETRY_PROGRAM.md](SYMMETRY_PROGRAM.md). Do not start building the polyhedral
+>   specimens described there.
+
 Continue the symmetry program in `github.com/Sakeeb91/attractor-atlas` (local: "Attractor Origin").
 Read, in order: `docs/SYMMETRY_PROGRAM.md` (the master plan — Phases 2/3 are §"Phase 2" and
 §"Phase 3"), `docs/RELATED_WORK.md` (Phase-0 verdicts), `README.md` and `STORY.md` (project state),
@@ -60,7 +75,8 @@ end — but the divergence only grows. Merging early is cleaner.
    write `results/<name>_verification.json` before you commit a name.
 6. **Names: marine lineage, verified unclaimed** (search `"<name> attractor"`). Used so far:
    Aurelia (moon jelly, C3), Naiad (water nymph, C2), Cassiopea (upside-down jelly, C4),
-   Mobula (devil ray, S4). For polyhedra, think creatures/forms with the right symmetry — e.g.
+   Mobula (devil ray, S4), Trinacria (fossil marine diatom with a triskelion-shaped frustule,
+   chiral dihedral D3). For polyhedra, think creatures/forms with the right symmetry, e.g.
    radiolaria/`Circogonia` (icosahedral!), `Lithocubus`/cubic radiolarians (octahedral),
    `Dorataspis` or a tetrahedral radiolarian (tetrahedral). Radiolaria are the obvious lineage:
    single-celled marine organisms whose silica skeletons realize exactly these point groups.
@@ -211,7 +227,7 @@ This is the spine of the paper regardless of Phase 2's outcome. The story so far
   per group (e.g. 20k). Record per group: order |G|, n_eval, **max λ1 that survives long-integrator
   certification** (NOT the optimistic batch estimate — re-certify the top-K), the D_KY at that max,
   and the **chaotic fraction** (bounded & λ1 > threshold).
-- **Fairness caveat to state honestly:** families have different param counts (Cn 7, S4 8, T/O/I 4),
+- **Fairness caveat to state honestly:** families have different param counts (Cn 7, S4 8, T 5, O/I 4),
   so chaotic-fraction is only loosely comparable across families; the robust comparable is
   **max certified λ1 under equal evaluation budget**. Say so.
 - **Null hypothesis to cite** (from RELATED_WORK.md): in the Letellier–Gilmore cover/image
