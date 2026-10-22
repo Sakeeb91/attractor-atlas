@@ -68,7 +68,7 @@ One full orbit of the camera (`python scripts/render_animation.py`):
 ## Certification of chaos
 
 All numbers below are reproducible with `python scripts/verify_chaos.py`
-(recorded in [`results/verification.json`](results/verification.json)).
+(recorded in [`results/aurelia_verification.json`](results/aurelia_verification.json)).
 
 | Property | Value |
 |---|---|
@@ -568,7 +568,7 @@ group-dependence is a real property of the equivariant design space.)
 ```bash
 pip install -r requirements.txt
 
-python scripts/verify_chaos.py        # certify Aurelia, write results/verification.json
+python scripts/verify_chaos.py        # certify Aurelia, write results/aurelia_verification.json
 python scripts/render_gallery.py      # render the Aurelia gallery
 python scripts/bifurcation_scan.py    # sweep c, plot the route to chaos
 python scripts/search_parameters.py   # re-run the original discovery search

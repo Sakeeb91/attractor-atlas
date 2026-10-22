@@ -95,7 +95,7 @@ This is the textbook signature (+, 0, −) of a strange attractor in three dimen
 
 **Boundedness.** Four million integration steps, no escape, every coordinate confined to a box roughly three units on a side. Combined with dissipativity, this rules out the embarrassing alternative that the pretty pictures depict a slow explosion.
 
-All of it is reproducible from the repository with one command per claim, and recorded in [`results/verification.json`](results/verification.json).
+All of it is reproducible from the repository with one command per claim, and recorded in [`results/aurelia_verification.json`](results/aurelia_verification.json).
 
 ## The edge of chaos
 

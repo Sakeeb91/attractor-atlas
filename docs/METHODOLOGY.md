@@ -923,7 +923,7 @@ cliff) is a property of the equivariant design space itself, not a cover artifac
 | claim | code | artifact |
 |---|---|---|
 | $C_n$ family + QD atlas | `atlas/family.py`, `atlas/map_elites.py`, `scripts/run_atlas.py` | `results/atlas/archive.json` |
-| Aurelia certification | `scripts/verify_chaos.py` | `results/verification.json` |
+| Aurelia certification | `scripts/verify_chaos.py` | `results/aurelia_verification.json` |
 | Naiad / Cassiopea certification | `scripts/verify_naiad.py`, `scripts/verify_cassiopea.py` | `results/{naiad,cassiopea}_verification.json` |
 | $S_4$ equivariance (math gate) | `tests/test_s4_equivariance.py` | pytest |
 | Mobula package = family (cross-check) | `tests/test_mobula_matches_family.py` | pytest |
