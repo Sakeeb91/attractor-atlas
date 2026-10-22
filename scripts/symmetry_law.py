@@ -11,6 +11,7 @@ escapees/artifacts dropped before the maximum is taken.
 Groups (and the family that realizes each):
   C2..C8  reducible action on R^3 (plane rotation + height): atlas/family.py
   S4      improper rotoreflection (order 4, Schoenflies):    atlas/family_s4.py
+  D3      chiral dihedral (order 6, half-turn kappa):        atlas/family_d.py (n=3)
   T,O,I   polyhedral ROTATION groups, IRREDUCIBLE on R^3:    atlas/family_{t,o,i}.py
 
 The headline finding: chaos strength is non-monotonic across the reducible-action
@@ -27,8 +28,13 @@ cover's LLE is independent of the covering group; our families are independently
 searched, not covers of a shared image, so any group-dependence is a property of
 the equivariant design space, not a cover artifact.
 
+Reproducibility note: run_one seeds its generator from hash(label), and Python
+randomizes str hashes per process unless PYTHONHASHSEED is set, so a rerun draws a
+different sample of the same box. The D3 row (results/law_D3.json) was produced
+with PYTHONHASHSEED=0 OMP_NUM_THREADS=1; the earlier rows record no hash seed.
+
 Usage:
-  python scripts/symmetry_law.py <label>     # one group -> results/law_<label>.json
+  PYTHONHASHSEED=0 python scripts/symmetry_law.py <label>   # one group -> results/law_<label>.json
   python scripts/symmetry_law.py aggregate   # build results/symmetry_law.csv + figure
 """
 
@@ -61,6 +67,7 @@ GROUPS = {
     "C5": (5, 7, "cn", 5), "C6": (6, 7, "cn", 6), "C7": (7, 7, "cn", 7),
     "C8": (8, 7, "cn", 8),
     "S4": (4, 8, "s4", None),
+    "D3": (6, 8, "dn", 3),
     "T": (12, 4, "poly", "t"), "O": (24, 4, "poly", "o"), "I": (60, 4, "poly", "i"),
 }
 
@@ -77,6 +84,10 @@ def search_group(label, rng):
         from atlas import family_s4 as fam
         P = rng.uniform(fam.PARAM_LO, fam.PARAM_HI, size=(N_EVAL, fam.N_PARAMS))
         res = fam.evaluate_batch(P, seed=int(rng.integers(1 << 30)), **SEARCH_KW)
+    elif kind == "dn":
+        from atlas import family_d as fam
+        P = rng.uniform(fam.PARAM_LO, fam.PARAM_HI, size=(N_EVAL, fam.N_PARAMS))
+        res = fam.evaluate_batch(P, extra, seed=int(rng.integers(1 << 30)), **SEARCH_KW)
     else:
         fam = {"t": "family_t", "o": "family_o", "i": "family_i"}[extra]
         mod = __import__(f"atlas.{fam}", fromlist=["x"])
@@ -109,6 +120,15 @@ def velocity_real(label):
         def f(s, p):
             x, y, z = s
             dw, dz = v(x + 1j * y, z, p)
+            return np.array([dw.real, dw.imag, float(np.real(dz))])
+        return f
+    if kind == "dn":
+        from atlas.family_d import velocity as v
+        n = extra
+
+        def f(s, p):
+            x, y, z = s
+            dw, dz = v(x + 1j * y, z, p, n)
             return np.array([dw.real, dw.imag, float(np.real(dz))])
         return f
     fam = {"t": "family_t", "o": "family_o", "i": "family_i"}[extra]
@@ -238,8 +258,9 @@ def aggregate():
     lam = [r["max_lambda1_certified"] for r in rows]
     orders = [r["order"] for r in rows]
     kinds = ["poly" if r["group"] in ("T", "O", "I") else
-             ("s4" if r["group"] == "S4" else "cn") for r in rows]
-    colors = {"cn": "#1f77b4", "s4": "#9467bd", "poly": "#d62728"}
+             ("s4" if r["group"] == "S4" else
+              ("dn" if r["group"].startswith("D") else "cn")) for r in rows]
+    colors = {"cn": "#1f77b4", "s4": "#9467bd", "dn": "#e07b39", "poly": "#d62728"}
     x = np.arange(len(rows))
     bars = ax.bar(x, lam, color=[colors[k] for k in kinds], edgecolor="black", linewidth=0.6)
     for xi, r in zip(x, rows):
@@ -248,11 +269,13 @@ def aggregate():
     ax.set_xticks(x); ax.set_xticklabels(labels)
     ax.set_ylabel(r"max certified $\lambda_1$  (equal eval budget)")
     ax.set_title("Chaos strength vs symmetry group\n"
-                 "blue = $C_n$ (reducible) · purple = $S_4$ rotoreflection · red = polyhedral (irreducible)")
+                 "blue = $C_n$ · purple = $S_4$ rotoreflection · orange = $D_3$ dihedral (all reducible)"
+                 " · red = polyhedral (irreducible)")
     ax.axhline(0, color="black", lw=0.8)
     from matplotlib.patches import Patch
     ax.legend(handles=[Patch(color=colors["cn"], label=r"$C_n$ rotation (reducible)"),
                        Patch(color=colors["s4"], label=r"$S_4$ rotoreflection"),
+                       Patch(color=colors["dn"], label=r"$D_3$ dihedral (chiral)"),
                        Patch(color=colors["poly"], label="polyhedral T/O/I (irreducible)")],
               loc="upper right")
     ax.grid(axis="y", alpha=0.3)
